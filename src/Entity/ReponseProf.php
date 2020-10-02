@@ -24,6 +24,11 @@ class ReponseProf
      */
     private $isJust;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Question::class)
+     */
+    private $question;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,6 +43,18 @@ class ReponseProf
     public function setIsJust(?bool $isJust): self
     {
         $this->isJust = $isJust;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

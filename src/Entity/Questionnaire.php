@@ -37,6 +37,11 @@ class Questionnaire
      */
     private $baremeTot;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Matiere::class)
+     */
+    private $matiere;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Questionnaire
     public function setBaremeTot(?int $baremeTot): self
     {
         $this->baremeTot = $baremeTot;
+
+        return $this;
+    }
+
+    public function getMatiere(): ?Matiere
+    {
+        return $this->matiere;
+    }
+
+    public function setMatiere(?Matiere $matiere): self
+    {
+        $this->matiere = $matiere;
 
         return $this;
     }

@@ -32,6 +32,16 @@ class ReponseEleve
      */
     private $noteQuestion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Session::class)
+     */
+    private $session;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ReponseProf::class)
+     */
+    private $reponseProf;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,30 @@ class ReponseEleve
     public function setNoteQuestion(?int $noteQuestion): self
     {
         $this->noteQuestion = $noteQuestion;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): self
+    {
+        $this->session = $session;
+
+        return $this;
+    }
+
+    public function getReponseProf(): ?ReponseProf
+    {
+        return $this->reponseProf;
+    }
+
+    public function setReponseProf(?ReponseProf $reponseProf): self
+    {
+        $this->reponseProf = $reponseProf;
 
         return $this;
     }

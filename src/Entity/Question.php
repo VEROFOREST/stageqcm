@@ -37,6 +37,16 @@ class Question
      */
     private $baremeQuestion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Questionnaire::class)
+     */
+    private $questionnaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeReponse::class)
+     */
+    private $typeReponse;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +96,30 @@ class Question
     public function setBaremeQuestion(?int $baremeQuestion): self
     {
         $this->baremeQuestion = $baremeQuestion;
+
+        return $this;
+    }
+
+    public function getQuestionnaire(): ?Questionnaire
+    {
+        return $this->questionnaire;
+    }
+
+    public function setQuestionnaire(?Questionnaire $questionnaire): self
+    {
+        $this->questionnaire = $questionnaire;
+
+        return $this;
+    }
+
+    public function getTypeReponse(): ?TypeReponse
+    {
+        return $this->typeReponse;
+    }
+
+    public function setTypeReponse(?TypeReponse $typeReponse): self
+    {
+        $this->typeReponse = $typeReponse;
 
         return $this;
     }
