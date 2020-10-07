@@ -21,8 +21,10 @@ class QuestionnaireGlobalType extends AbstractType
                                 'entry_options' => [
                                     'attr' =>
                                     ['class' => 'questionInput'],
-    
+                                    'label'=> false,
                                  ],
+                                'block_name' => 'questions',
+                                 
                                  'allow_add' => true,
                                 'allow_delete' => true,
                                 'prototype' => true,
@@ -34,8 +36,10 @@ class QuestionnaireGlobalType extends AbstractType
             'entry_options' => [
                                     'attr' =>
                                     ['class' => 'reponseInput'],
-    
+                                    'label'=> false,
                                  ],
+            'block_name' => 'reponses',
+            
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,

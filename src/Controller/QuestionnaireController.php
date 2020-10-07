@@ -68,14 +68,18 @@ class QuestionnaireController extends AbstractController
             $entityManager->flush();
 
         }
+
+        // salut vero !
+         dd($form->createView());
         return $this->render('questionnaire/index.html.twig', [
             'questionnaire'=>$questionnaire,
             'question'=>$question,
             'reponseProf'=>$reponseProf,
-            'form' => $form->createView(),
+            'form' => $form->createView(), // ce truc construit la view de ton formulaire d'apres ton FormType
             
             
         ]);
+       
     }
 }
 
