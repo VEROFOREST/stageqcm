@@ -1,0 +1,132 @@
+ {{ form_start(form) }}
+    <h3>Questionnaire</h3>
+    <div class="row">
+        <div class="col-md-12">
+        {{ form_row(form.questionnaire) }}
+        </div>
+    </div>
+    
+    
+    <h3>Questions</h3>
+  
+    <div class="row questionwrapper" data-prototype="{{ form_widget(form.question.vars.prototype)|e     ('html_attr') }}" data-index="{{ form.question|length }}">
+        {% for quest in form.question %}
+            <div class="col-md-12">
+                {{ form_row(quest) }}
+                <h3>Réponse(s)</h3>
+                    <div class="row">
+                    {% for rep in form.reponseProf %}
+                        <div class="col-md-12">
+                            {{ form_row(rep) }}
+                        </div>
+                    {% endfor %}
+                
+                    </div>
+                    
+            </div>
+        {% endfor %}
+   
+        <a href="#" class="jsaddquestions">
+        <span class="fa fa-close"> +++</span>
+        </a>
+    </div>
+    
+     <button class="btn">{{ button_label|default('Save') }}</button>
+     
+{{ form_end(form) }}
+ 
+ 
+ {# {{ form_start(form) }}
+    {{ form_widget(form) }}
+    
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}  #}
+
+{# <div class="container">
+    {{ form_start(form) }}
+     <div class="form-row">
+        <div class="form-group col-md-4">
+   
+        {{form_label(form.questionnaire.matiere, 'Matière', { 'attr': {'class': 'foo'} }) }} 
+        {{ form_widget(form.questionnaire.matiere, {'attr': {'class': "form-control",}}) }} 
+        </div>
+         <div class="form-group col-md-4">
+            {{form_label(form.questionnaire.baremeTot, 'Barème Total', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.questionnaire.baremeTot, {'attr': {'class': "form-control"}}) }}
+        </div>
+        
+    </div>
+       
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {{form_label(form.questionnaire.startedAt, 'Date Début', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.questionnaire.startedAt, {'attr': {'class': "form-control"}}) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{form_label(form.questionnaire.stoppedAt, 'Date Fin', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.questionnaire.stoppedAt, {'attr': {'class': "form-control"}}) }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            {{form_label(form.questionnaire.nbreQuestion, 'Nombre de questions', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.questionnaire.nbreQuestion, {'attr': {'class': "form-control"}}) }}
+        </div>
+    </div>
+   
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                {{form_label(form.question[0].numero, 'Question n° ', { 'attr': {'class': 'foo'} }) }}
+                {{ form_widget(form.question[0].numero, {'attr': {'class': "form-control", 'placeholder': "numéro de question"}}) }}
+            </div>
+            <div class="form-group col-md-10">
+                {{form_label(form.question[0].libelle, 'Libellé de la question', { 'attr': {'class': 'foo'} }) }}
+                {{ form_widget(form.question[0].libelle, {'attr': {'class': "form-control"}}) }}
+            </div>
+            <div class="form-group col-md-1">
+                {{form_label(form.question[0].baremeQuestion, 'barème de la question', { 'attr': {'class': 'foo'} }) }}
+                {{ form_widget(form.question[0].baremeQuestion, {'attr': {'class': "form-control", 'placeholder': "barème de la question"}}) }}
+            </div>
+        </div>
+ 
+   
+    
+   
+    <div class="form-row"> 
+        <div class="form-group col-md-6">
+            {{form_label(form.question[0].questionnaire, '', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.question[0].questionnaire, {'attr': {'class': "form-control"}}) }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {{form_label(form.question[0].typeReponse, 'Type de réponse', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.question[0].typeReponse, {'attr': {'class': "form-control"}}) }}
+        </div>
+    
+        
+        
+        <div class="form-group col-md-1">
+            {{form_label(form.question[0].nbreChoix, 'nombre de choix', { 'attr': {'class': 'foo'} }) }}
+            {{ form_widget(form.question[0].nbreChoix, {'attr': {'class': "form-control", 'placeholder': "nombre de choix"}}) }}
+        </div>
+        <div class="form-row">
+                <div class="form-group col-md-8">
+                    {{form_label(form.reponseProf[0].libelleReponse, 'reponses multiples', { 'attr': {'class': 'foo'} }) }}
+                    {{ form_widget(form.reponseProf[0].libelleReponse, {'attr': {'class': "form-control"}}) }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{form_label(form.reponseProf[0].isJust, 'reponse juste', { 'attr': {'class': 'foo'} }) }}
+                    {{ form_widget(form.reponseProf[0].isJust, {'attr': {'class': "form-control", }}) }}
+                </div>
+               
+        </div>
+        
+          
+    </div>
+    
+    
+</div>
+ <button class="btn">{{ button_label|default('Save') }}</button> #}
+
+ {# {{ form_end(form) }}  #}

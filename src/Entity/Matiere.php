@@ -29,6 +29,8 @@ class Matiere
      */
     private $user;
 
+    
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -76,4 +78,6 @@ class Matiere
 
         return $this;
     }
+
+    
 }

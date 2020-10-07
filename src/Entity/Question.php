@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
+use App\test\QuestionnaireGlobal;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,12 @@ class Question
      * @ORM\ManyToOne(targetEntity=TypeReponse::class)
      */
     private $typeReponse;
+
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=QuestionnaireGlobal::class, inversedBy="question")
+    //  * @ORM\JoinColumn(nullable=false)
+    //  */
+    // private $questionnaireGlobal;
 
     public function getId(): ?int
     {
@@ -120,6 +127,18 @@ class Question
     public function setTypeReponse(?TypeReponse $typeReponse): self
     {
         $this->typeReponse = $typeReponse;
+
+        return $this;
+    }
+
+    public function getQuestionnaireGlobal(): ?QuestionnaireGlobal
+    {
+        return $this->questionnaireGlobal;
+    }
+
+    public function setQuestionnaireGlobal(?QuestionnaireGlobal $questionnaireGlobal): self
+    {
+        $this->questionnaireGlobal = $questionnaireGlobal;
 
         return $this;
     }

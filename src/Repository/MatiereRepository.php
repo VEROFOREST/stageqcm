@@ -47,4 +47,22 @@ class MatiereRepository extends ServiceEntityRepository
         ;
     }
     */
+    //   public function getMatiereUser(){
+    //      $entityManager = $this->getEntityManager();
+       
+    //     $query = $entityManager->createQuery(
+    //         'SELECT
+    //            Matiere,
+    //            User
+    //            matiere_user
+    //          FROM
+    //             App\Entity\Matiere matiere
+    //          JOIN
+    //            matiere_user.user_id user.id'
+    //     );
+
+    //     // dd($query->getResult());
+    //     return $query->getResult();
+    // }
+    
 }
