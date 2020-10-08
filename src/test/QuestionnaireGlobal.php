@@ -58,7 +58,12 @@ class QuestionnaireGlobal
 
         return $this;
     }
+    // public function setReponseProf(ReponseProf $reponseProf): self
+    // {
+    //     $this->reponseProf = $reponseProf;
 
+    //     return $this;
+    // }
     /**
      * @return Collection|Question[]
      */

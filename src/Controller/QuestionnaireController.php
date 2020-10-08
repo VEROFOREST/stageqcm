@@ -38,42 +38,40 @@ class QuestionnaireController extends AbstractController
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
+        $question->addReponseProf($reponseProf);
+        
 
         $questionnaireGlobal=(new QuestionnaireGlobal())
                 ->setQuestionnaire($questionnaire)
-                ->addQuestion($question)
-                ->addReponseProf($reponseProf);
-        
+                ->addQuestion($question);
+               
+                
        
-        
+       
         $form=$this->createForm(QuestionnaireGlobalType::class,$questionnaireGlobal);
        
         $form->handleRequest($request);
-         
-       
-
-
         
         if ($form->isSubmitted() && $form->isValid()) {
             //    dd($questionnaireGlobal);      
-            
+           $question->getReponseProfs();
             $entityManager = $this->getDoctrine()->getManager();
         
             $entityManager->persist($questionnaire);
             $question->setQuestionnaire($questionnaire);
             $entityManager->persist($question);
-            $reponseProf->setQuestion($question);
-             
+            // $reponseProf->setQuestion($question);
             $entityManager->persist($reponseProf);
+             
              
            
             $entityManager->flush();
 
         }
 
-        $test=$reponseProf->getQuestion();
-             dd($test);
-         
+        //  $test=  $question->getReponseProfs();
+        //     dd($test);
+        //  dd( $questionnaireGlobal);
         return $this->render('questionnaire/index.html.twig', [
             'questionnaire'=>$questionnaire,
             'question'=>$question,

@@ -30,8 +30,7 @@ class QuestionnaireGlobalType extends AbstractType
                                 'prototype' => true,
                                 'by_reference' => false
             ))
-           
-            ->add('reponseProf', CollectionType::class, array(
+             ->add('reponseProf', CollectionType::class, array(
             'entry_type' => ReponseProfType::class,
             'entry_options' => [
                                     'attr' =>
@@ -45,6 +44,8 @@ class QuestionnaireGlobalType extends AbstractType
             'prototype' => true,
             'by_reference' => false
         ))
+           
+            
         ;
     }
 

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use App\test\QuestionnaireGlobal;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class Question
      * @ORM\ManyToOne(targetEntity=TypeReponse::class)
      */
     private $typeReponse;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReponseProf::class, mappedBy="question")
+     */
+    private $reponseProfs;
+
+    public function __construct()
+    {
+        $this->reponseProfs = new ArrayCollection();
+    }
 
     // /**
     //  * @ORM\ManyToOne(targetEntity=QuestionnaireGlobal::class, inversedBy="question")
@@ -139,6 +151,37 @@ class Question
     public function setQuestionnaireGlobal(?QuestionnaireGlobal $questionnaireGlobal): self
     {
         $this->questionnaireGlobal = $questionnaireGlobal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReponseProf[]
+     */
+    public function getReponseProfs(): Collection
+    {
+        return $this->reponseProfs;
+    }
+
+    public function addReponseProf(ReponseProf $reponseProf): self
+    {
+        if (!$this->reponseProfs->contains($reponseProf)) {
+            $this->reponseProfs[] = $reponseProf;
+            $reponseProf->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseProf(ReponseProf $reponseProf): self
+    {
+        if ($this->reponseProfs->contains($reponseProf)) {
+            $this->reponseProfs->removeElement($reponseProf);
+            // set the owning side to null (unless already changed)
+            if ($reponseProf->getQuestion() === $this) {
+                $reponseProf->setQuestion(null);
+            }
+        }
 
         return $this;
     }

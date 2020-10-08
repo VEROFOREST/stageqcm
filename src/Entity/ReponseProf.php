@@ -26,10 +26,6 @@ class ReponseProf
      */
     private $isJust;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Question::class)
-     */
-    private $question;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -41,6 +37,12 @@ class ReponseProf
     //  * @ORM\JoinColumn(nullable=false)
     //  */
     private $questionnaireGlobal;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponseProfs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
 
     public function getId(): ?int
     {
@@ -65,17 +67,7 @@ class ReponseProf
         return $this;
     }
 
-    public function getQuestion(): ?Question
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?Question $question): self
-    {
-        $this->question = $question;
-
-        return $this;
-    }
+  
 
     public function getLibelleReponse(): ?string
     {
@@ -97,6 +89,18 @@ class ReponseProf
     public function setQuestionnaireGlobal(?QuestionnaireGlobal $questionnaireGlobal): self
     {
         $this->questionnaireGlobal = $questionnaireGlobal;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }
