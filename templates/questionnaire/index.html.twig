@@ -6,54 +6,6 @@
 {% include "questionnaire/_form.html.twig" %}
  
   {% block javascripts %}
- <script>
-        {# pour pouvoir afficher autant de form question que de nombre rentrer dans l'input #}
-        {# jQuery(document).ready(function() {
-            var $wrapper = $('.questionwrapper');
-           
-            
-            $wrapper.on('change', 'input[id="questionnaire_global_question_0_baremeQuestion"]', function(e) {
-                e.preventDefault();
-               var nbrequestion=$('input[id="questionnaire_global_question_0_baremeQuestion"]').val();
-               {# console.log(nbrequestion); #}
-                {# var prototype = $wrapper.data('prototype');
-                // get the new index
-                var index = $wrapper.data('index');
-                // Replace '__name__' in the prototype's HTML to
-                // instead be a number based on how many items we have
-                var newForm = prototype.replace(/__name__/g, index);
-                // increase the index with one for the next item
-                               
-                $wrapper.data('index', nbrequestion);
-                // Display the form in the page before the "new" link
-                $(this).before(newForm);
-            });
-        }); #}
-
-{#  js pour afficher autant de reponses possibles que de choix mis dans input nombre de choix #}
-        {# jQuery(document).ready(function() {
-            var $wrapper = $('.reponsewrapper');
-           
-            
-            $wrapper.on('change', 'input[id="questionnaire_global_question_0_baremeQuestion"]', function(e) {
-                e.preventDefault();
-               var nbrequestion=$('input[id="questionnaire_global_question_0_baremeQuestion"]').val();
-               {# console.log(nbrequestion); #}
-                {# var prototype = $wrapper.data('prototype'); #}
-                // get the new index
-                {# var index = $wrapper.data('index'); #}
-                // Replace '__name__' in the prototype's HTML to
-                // instead be a number based on how many items we have
-                {# var newForm = prototype.replace(/__name__/g, index); #}
-                // increase the index with one for the next item
-                               
-                {# $wrapper.data('index', nbrequestion); #}
-                // Display the form in the page before the "new" link
-                {# $(this).before(newForm); #}
-            {# }); #}
-        {# }); #} 
-    </script>
-  
-  
+ 
   {% endblock %}
 {% endblock %}

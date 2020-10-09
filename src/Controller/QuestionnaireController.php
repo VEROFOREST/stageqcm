@@ -60,7 +60,7 @@ class QuestionnaireController extends AbstractController
             $entityManager->persist($questionnaire);
             $question->setQuestionnaire($questionnaire);
             $entityManager->persist($question);
-            // $reponseProf->setQuestion($question);
+            $reponseProf->setQuestion($question);
             $entityManager->persist($reponseProf);
              
              

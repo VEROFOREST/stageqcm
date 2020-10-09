@@ -35,6 +35,21 @@ class QuestionType extends AbstractType
                    
                     ))
             ->add('nbreChoix')
+            ->add('reponseProfs', CollectionType::class, array(
+            'entry_type' => ReponseProfType::class,
+            'entry_options' => [
+                                    'attr' =>
+                                    ['class' => 'reponseInput'],
+                                    'label'=> false,
+                                 ],
+            'block_name' => 'reponses',
+            
+            'allow_add' => true,
+            'allow_delete' => true,
+            'prototype' => true,
+            'by_reference' => false
+        ))
+
            
 
         ;
