@@ -31,7 +31,7 @@
            
             
             $wrapperreponse.on('click', "jsaddquestion", function(e) {
-                 console.log( $( this ).text() );
+                 console.log('ppl' );
                 
                 e.preventDefault();
         //        var nbrequestion=$('input[id="questionnaire_global_question_0_baremeQuestion"]').val();
@@ -44,7 +44,7 @@
                 var newForm = prototype.replace(/__name__/g, index); 
         //         // increase the index with one for the next item
                                
-                $wrapperreponse.data('index', nbrequestion); 
+                $wrapperreponse.data('index', index+1); 
         //         // Display the form in the page before the "new" link
                 return $(this).before(newForm); 
                 }
