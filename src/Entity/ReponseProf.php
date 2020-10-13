@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReponseProfRepository;
-use App\test\QuestionnaireGlobal;
+
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -32,11 +32,7 @@ class ReponseProf
      */
     private $libelleReponse;
 
-    // /**
-    //  * @ORM\ManyToOne(targetEntity=QuestionnaireGlobal::class, inversedBy="reponseProf")
-    //  * @ORM\JoinColumn(nullable=false)
-    //  */
-    private $questionnaireGlobal;
+    
 
     /**
      * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponseProfs")
@@ -81,17 +77,7 @@ class ReponseProf
         return $this;
     }
 
-    public function getQuestionnaireGlobal(): ?QuestionnaireGlobal
-    {
-        return $this->questionnaireGlobal;
-    }
-
-    public function setQuestionnaireGlobal(?QuestionnaireGlobal $questionnaireGlobal): self
-    {
-        $this->questionnaireGlobal = $questionnaireGlobal;
-
-        return $this;
-    }
+   
 
     public function getQuestion(): ?Question
     {

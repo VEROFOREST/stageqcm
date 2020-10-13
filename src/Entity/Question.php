@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
-use App\test\QuestionnaireGlobal;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,11 +40,7 @@ class Question
      */
     private $baremeQuestion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Questionnaire::class)
-     */
-    private $questionnaire;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity=TypeReponse::class)
      */
@@ -55,16 +51,17 @@ class Question
      */
     private $reponseProfs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Questionnaire::class, inversedBy="questions")
+     */
+    private $questionnaire;
+
     public function __construct()
     {
         $this->reponseProfs = new ArrayCollection();
     }
 
-    // /**
-    //  * @ORM\ManyToOne(targetEntity=QuestionnaireGlobal::class, inversedBy="question")
-    //  * @ORM\JoinColumn(nullable=false)
-    //  */
-    // private $questionnaireGlobal;
+   
 
     public function getId(): ?int
     {
@@ -119,17 +116,7 @@ class Question
         return $this;
     }
 
-    public function getQuestionnaire(): ?Questionnaire
-    {
-        return $this->questionnaire;
-    }
-
-    public function setQuestionnaire(?Questionnaire $questionnaire): self
-    {
-        $this->questionnaire = $questionnaire;
-
-        return $this;
-    }
+    
 
     public function getTypeReponse(): ?TypeReponse
     {
@@ -143,17 +130,7 @@ class Question
         return $this;
     }
 
-    public function getQuestionnaireGlobal(): ?QuestionnaireGlobal
-    {
-        return $this->questionnaireGlobal;
-    }
-
-    public function setQuestionnaireGlobal(?QuestionnaireGlobal $questionnaireGlobal): self
-    {
-        $this->questionnaireGlobal = $questionnaireGlobal;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|ReponseProf[]
@@ -182,6 +159,18 @@ class Question
                 $reponseProf->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQuestionnaire(): ?Questionnaire
+    {
+        return $this->questionnaire;
+    }
+
+    public function setQuestionnaire(?Questionnaire $questionnaire): self
+    {
+        $this->questionnaire = $questionnaire;
 
         return $this;
     }

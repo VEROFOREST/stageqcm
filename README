@@ -1,0 +1,143 @@
+{% block body %}
+<div class="container">
+  <h1 class="show">Questionnaire</h1>
+
+  <form id="questionnaire-form" method="post" action="">
+     <label for="cars">Matière:</label>
+
+  <select name="matiere" id="matiere">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+  </select>
+      
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputBaremeTot">Barême total</label>
+          <input type="text" class="form-control" id="inputBaremeTot" name="inputBaremeTot"value="">
+        </div>
+      
+     
+        <div class="form-group col-md-6">
+          <label for="inputStartedAt">commence le </label>
+          <input type="date" class="form-control" id="inputStartedAt" name="inputStartedAt
+          " value="">
+        </div>
+      </div>
+      
+     
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputStoppedAt">Fini le </label>
+          <input type="date" class="form-control" id="inputStoppedAt" name="inputStoppedAt" value="" >
+        </div>
+      
+      
+        <div class="form-group col-md-6">
+          
+           <label for="inputNbreQuestions">Nombre de questions </label>
+          <input type="text" class="form-control" id="inputNbreQuestions" name="inputNbreQuestions" value="">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="inputNumero">N° : </label>
+          <input type="textarea" class="form-control" id="inputNumero" name="inputNumero" value="" >       
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputLibelle">Libellé</label>
+          <input type="text" class="form-control" id="inputLibelle" name="inputLibelle" value="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputBaremeQuest">nombre de point(s):</label>
+          <input type="text" class="form-control" id="inputBaremeQuest" id="inputBaremeQuest" value="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputTypeQuest">type de question:</label>
+        <select name="inputTypeQuest" id="inputTypeQuest">
+          <option value="{{typerep}}">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+      </select>
+     </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputNbreChoix">nombre de choix possible(s)</label>
+          <input type="text" class="form-control"  id="inputNbreChoix" name="inputNbreChoix" value="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputReponse"> libellé Reponse :</label>
+          <input type="textearea" id="inputReponse" class="form-control"value="">
+        </div>
+      </div>
+       <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check">
+            
+            <input class="formCheckReponse" name="choixReponse"  type="radio" value="1" id="choixRep1" checked="checked">
+            <label class="form-check-label " for="choixRep1">
+              Choix N°1
+            </label>
+          
+          </div>
+          <div class="form-check">
+            
+            <input class="formCheckReponse" name="choixReponse" type="radio" value="2" id="choixRep2" >
+            <label class="form-check-label" for="choixRep2">
+             Choix N°2
+
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="formCheckReponse"name="choixReponse"  type="radio" value="3" id="choixRep3" >
+            <label class="form-check-label" for="choixRep3">
+            Choix N°3
+
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="formCheckReponse" name="choixReponse"  type="radio" value="4" id="choixRep4" >
+            <label class="form-check-label" for="choixRep4">
+            choix 4
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="formCheckReponse"name="choixReponse" type="radio" value="5" id="choixRep5" >
+            <label class="form-check-label" for="choixRep5">
+            choix5
+
+            </label>
+            </div>
+        
+        <div class="form-check">
+          <label for="checkJust"> bonne réponse </label>
+          <input class="form-check-input-left" type="checkbox" id="checkJust" checked>
+        </div>
+        </div>
+      
+       </div>
+      </div>
+    
+  
+    <button id="preinscription" type="submit" class="btn btn-primary btn-lg float-right">Envoyer<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </button>
+      
+
+  </form>
+  
+
+    {# <a href="{{ path('pre_inscription_index') }}">back to list</a> #}
+</div>
+{% endblock %}

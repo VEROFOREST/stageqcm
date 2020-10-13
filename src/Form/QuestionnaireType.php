@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\Matiere;
 use App\Entity\Questionnaire;
-use App\Entity\ReponseProf;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,6 +26,20 @@ class QuestionnaireType extends AbstractType
             ->add('stoppedAt')
             ->add('nbreQuestion')
             ->add('baremeTot')
+            ->add('questions', CollectionType::class, array(
+                                'entry_type' => QuestionType::class,
+                                'entry_options' => [
+                                    'attr' =>
+                                    ['class' => 'questionInput'],
+                                    'label'=> false,
+                                 ],
+                                'block_name' => 'questions',
+                                 
+                                 'allow_add' => true,
+                                'allow_delete' => true,
+                                'prototype' => true,
+                                'by_reference' => false
+            ))
             
             
 

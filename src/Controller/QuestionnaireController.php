@@ -7,12 +7,14 @@ use App\Entity\Question;
 use App\Entity\Questionnaire;
 use App\test\QuestionnaireGlobal;
 use App\Entity\ReponseProf;
+use App\Entity\TypeReponse;
 use App\Entity\User;
 use App\Form\QuestionnaireGlobalType;
 use App\Form\QuestionnaireType;
 use App\Form\QuestionType;
 use App\Form\ReponseProfType;
 use App\Repository\MatiereRepository;
+use App\Repository\TypeReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +26,11 @@ class QuestionnaireController extends AbstractController
     /**
      * @Route("/questionnaire", name="questionnaire")
      */
-    public function index()
+    public function index(MatiereRepository $matiereRepository, TypeReponseRepository $typeReponseRepository)
     {
         return $this->render('questionnaire/index.html.twig', [
+            'matiere'=>$matiereRepository->findAll(),
+            'typeRep'=>$typeReponseRepository->findAll(),
             'controller_name' => 'QuestionnaireController',
         ]);
     }
@@ -38,17 +42,19 @@ class QuestionnaireController extends AbstractController
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
+        $questionnaire->addQuestion($question);
         $question->addReponseProf($reponseProf);
+
         
 
-        $questionnaireGlobal=(new QuestionnaireGlobal())
-                ->setQuestionnaire($questionnaire)
-                ->addQuestion($question);
+        // $questionnaireGlobal=(new QuestionnaireGlobal())
+        //         ->setQuestionnaire($questionnaire)
+        //         ->addQuestion($question);
                
                 
        
        
-        $form=$this->createForm(QuestionnaireGlobalType::class,$questionnaireGlobal);
+        $form=$this->createForm(QuestionnaireType::class,$questionnaire);
        
         $form->handleRequest($request);
         
