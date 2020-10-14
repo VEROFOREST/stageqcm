@@ -1,73 +1,47 @@
  {{ form_start(form) }}
     <h3>Questionnaire</h3>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="container">
+        
          {{form_label(form.matiere, 'Matière', { 'attr': {'class': 'foo'} } )}}
          {{ form_widget(form.matiere,{'attr': {'class': "form-control",}} )}}
             {{ form_label(form.startedAt,'commence le', { 'attr': {'class': 'foo'} } )}} 
-            {{ form_widget(form.startedAt,{'attr': {'class': "form-control",}} )}}
+            {{ form_widget(form.startedAt )}}
             {{ form_label(form.stoppedAt,'s\'arrête le', { 'attr': {'class': 'foo'}} )}} 
-            {{ form_widget(form.stoppedAt,{'attr': {'class': "form-control",}})}}
+            {{ form_widget(form.stoppedAt)}}
             {{ form_label(form.baremeTot,'Barème total ?', { 'attr': {'class': 'foo'}})}} 
             {{ form_widget(form.baremeTot,{'attr': {'class': "form-control",}})}}
             {{ form_label(form.nbreQuestion,'nombre de questions',{ 'attr': {'class': 'foo'}})}} 
             {{ form_widget(form.nbreQuestion,{'attr': {'class': "nbrequestion",}})}}
-    </div> 
-    <div>
-            <h3>Questions</h3>
-    </div>
-    <div class="row formQuestion">
+    
+        <div>
+                <h3>Questions</h3>
+        </div>
+                    <div class=" row questionwrapper" 
+                    data-prototype-reponse="{{ form_widget(form.questions.vars.prototype.children['reponseProfs'].vars.prototype)|e('html_attr') }}"
+                    data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}" 
+                    {# data-index-reponse ="{{ form.questions.vars.prototype.children['reponseProfs']|length }}" #}
+                    data-index="{{ form.questions|length }}"
 
-             <div class="row  questionwrapper" data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}" data-index="{{ form.questions|length }}">
-             <div class="formtwigquest">
-                     {% for quest in form.questions %} 
-                    {# {{form_label(quest.numero, 'N°', { 'attr': {'class': 'foo'} } )}} 
-                    {{ form_widget(quest.numero,{'attr': {'class': "form-control",}} )}}
-                    {{ form_label(quest.libelle,'Libellé de la question', { 'attr': {'class': 'foo'} } )}} 
-                    {{ form_widget(quest.libelle,{'attr': {'class': "form-control",}} )}}
-                    {{ form_label(quest.baremeQuestion,'Barème de la question', { 'attr': {'class': 'foo'}} )}} 
-                    {{ form_widget(quest.baremeQuestion,{'attr': {'class': "form-control",}})}}
-                    {{ form_label(quest.typeReponse,'Est ce QCM ou réponse libre ?', { 'attr': {'class': 'foo'}})}} 
-                    {{ form_widget(quest.typeReponse,{'attr': {'class': "form-control",}})}}
-                    {{ form_label(quest.nbreChoix,'si QCM, nombre de choix possible',{ 'attr': {'class': 'foo'}})}} 
-                    {{ form_widget(quest.nbreChoix,{'attr': {'class': "nbreChoix",}})}} #}
-                        {{dump(form.questions.vars.prototype['reponseProfs'].vars.prototype.children)}}
-             
-                         <div class="row reponsewrapper" data-prototype="{{ form_widget(quest.reponseProfs.vars.prototype)|e('html_attr') }}" data-index="{{ quest.reponseProfs|length }}">  
-                         {% for rep in quest.reponseProfs %} 
-                               {# {{ form_label(rep.libelleReponse,'Libellés reponse',{ 'attr': {'class': 'foo'}})}} 
-                                {{ form_widget(rep.libelleReponse,{'attr': {'class': "form-control",}})}}
-                                {{ form_label(rep.isJust,'Réponse(s) possibles',{ 'attr': {'class': 'foo'}})}} 
-                                {{ form_widget(rep.isJust,{'attr': {'class': "form-check",}})}}  #}
-                            {# <div class=" col-6">
-                                <a href="" class="jsaddreponse">
-                                <span class="btn btn-lg btn-primary" > Ajouter une reponse</span>
-                                </a>
-                            </div>
-                        #}
-                            </div>
-                         {% endfor %}
+                    data-index-reponse="{{ form.questions.vars.prototype.children['reponseProfs']|length }}">
+                    {# {{dump(form.questions.vars.prototype.children['reponseProfs']|length )}} #}
+                            {% for quest in form.questions %} 
+                                {% for rep in quest.reponseProfs %} 
+                        
+                                {% endfor %}
+                                    
                             
-                    {# <div class=" col-6">
-                    <a href="" class="jsaddquestion">
-                    <span class="btn btn-lg btn-primary" > Ajouter une question</span>
-                    </a>
-                    </div> #}
-             {% endfor %}  
-            </div>
-            
-            
-    </div>
-    
-    
+                            {% endfor %}  
+                    </div>
+                    
+         
     
   
-    
-{{ form_widget(form._token) }}
-<div>
+            {{ form_widget(form._token) }}
+            <div>
 
-<button class="btn btn-lg btn-primary">{{ button_label|default('Save') }}</button>
-</div>
+            <button class="btn btn-lg btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+</div> 
     {# render rest empêche les légendes de s'afficher par rapport au form type  #}
 {{ form_end(form, {'render_rest': false}) }}
  

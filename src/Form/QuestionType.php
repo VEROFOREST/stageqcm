@@ -5,10 +5,12 @@ namespace App\Form;
 use App\Entity\Question;
 use App\Entity\Questionnaire;
 use App\Entity\TypeReponse;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,7 +26,9 @@ class QuestionType extends AbstractType
                     'choice_label' => 'id',
                     'multiple'  => false,
             ))
-            ->add('numero')
+            ->add('numero',TypeTextType::class,[
+            'attr' => ['class' => 'col-12'],
+        ])
             ->add('libelle')
             ->add('baremeQuestion')
             ->add('typeReponse',EntityType::class, array(
@@ -42,12 +46,13 @@ class QuestionType extends AbstractType
                                     ['class' => 'reponseInput'],
                                     'label'=> false,
                                  ],
-            'block_name' => 'reponses',
-            
-            'allow_add' => true,
-            'allow_delete' => true,
-            'prototype' => true,
-            'by_reference' => false
+                                'block_name' => 'reponses',
+                                
+                                'allow_add' => true,
+                                'allow_delete' => true,
+                                'prototype' => true,
+                                'prototype_name' => '__rep_prot__',
+                                'by_reference' => false
         ))
 
            

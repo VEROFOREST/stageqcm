@@ -141,3 +141,41 @@
     {# <a href="{{ path('pre_inscription_index') }}">back to list</a> #}
 </div>
 {% endblock %}
+
+-------------------------------------------------------------------------
+
+
+
+ {# {{form_row(quest)}} #}
+
+                    {# {{form_label(quest.numero, 'N°', { 'attr': {'class': 'foo'} } )}} 
+                    {{ form_widget(quest.numero,{'attr': {'class': "form-control",}} )}}
+                    {{ form_label(quest.libelle,'Libellé de la question', { 'attr': {'class': 'foo'} } )}} 
+                    {{ form_widget(quest.libelle,{'attr': {'class': "form-control",}} )}}
+                    {{ form_label(quest.baremeQuestion,'Barème de la question', { 'attr': {'class': 'foo'}} )}} 
+                    {{ form_widget(quest.baremeQuestion,{'attr': {'class': "form-control",}})}}
+                    {{ form_label(quest.typeReponse,'Est ce QCM ou réponse libre ?', { 'attr': {'class': 'foo'}})}} 
+                    {{ form_widget(quest.typeReponse,{'attr': {'class': "form-control",}})}}
+                    {{ form_label(quest.nbreChoix,'si QCM, nombre de choix possible',{ 'attr': {'class': 'foo'}})}} 
+                    {{ form_widget(quest.nbreChoix,{'attr': {'class': "nbreChoix",}})}} #}
+                        {# {{dump(form.questions.vars.prototype.children['reponseProfs'].vars.prototype)}} #}
+             
+                         {# <div class="row reponsewrapper">   #}
+                         
+                               {# {{ form_label(rep.libelleReponse,'Libellés reponse',{ 'attr': {'class': 'foo'}})}} 
+                                {{ form_widget(rep.libelleReponse,{'attr': {'class': "form-control",}})}}
+                                {{ form_label(rep.isJust,'Réponse(s) possibles',{ 'attr': {'class': 'foo'}})}} 
+                                {{ form_widget(rep.isJust,{'attr': {'class': "form-check",}})}}  #}
+                            {# <div class=" col-6">
+                                <a href="" class="jsaddreponse">
+                                <span class="btn btn-lg btn-primary" > Ajouter une reponse</span>
+                                </a>
+                            </div>
+                        #}
+                            {# </div> #}
+
+                            {# <div class=" col-6">
+                    <a href="" class="jsaddquestion">
+                    <span class="btn btn-lg btn-primary" > Ajouter une question</span>
+                    </a>
+                    </div> #}

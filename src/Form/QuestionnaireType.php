@@ -30,7 +30,7 @@ class QuestionnaireType extends AbstractType
                                 'entry_type' => QuestionType::class,
                                 'entry_options' => [
                                     'attr' =>
-                                    ['class' => 'questionInput'],
+                                    ['class' => 'questionInput col-md-12'],
                                     'label'=> false,
                                  ],
                                 'block_name' => 'questions',

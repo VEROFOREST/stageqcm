@@ -5,14 +5,13 @@ namespace App\Controller;
 use App\Entity\Matiere;
 use App\Entity\Question;
 use App\Entity\Questionnaire;
-use App\test\QuestionnaireGlobal;
+
 use App\Entity\ReponseProf;
 use App\Entity\TypeReponse;
 use App\Entity\User;
-use App\Form\QuestionnaireGlobalType;
+
 use App\Form\QuestionnaireType;
-use App\Form\QuestionType;
-use App\Form\ReponseProfType;
+
 use App\Repository\MatiereRepository;
 use App\Repository\TypeReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,15 +41,16 @@ class QuestionnaireController extends AbstractController
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
-        $questionnaire->addQuestion($question);
-        $question->addReponseProf($reponseProf);
+        // $questionnaire->addQuestion($question);
 
         
 
-        // $questionnaireGlobal=(new QuestionnaireGlobal())
-        //         ->setQuestionnaire($questionnaire)
-        //         ->addQuestion($question);
+        $questionnaire=(new Questionnaire())
+                
+                    
+                ->addQuestion($question);
                
+        $question->addReponseProf($reponseProf);
                 
        
        
