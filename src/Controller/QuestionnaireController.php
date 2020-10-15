@@ -50,7 +50,7 @@ class QuestionnaireController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //    dd($questionnaireGlobal);      
+                
            
             $entityManager = $this->getDoctrine()->getManager();
         
@@ -73,14 +73,12 @@ class QuestionnaireController extends AbstractController
 
         }
 
-        //  $test=  $question->getReponseProfs();
-        //     dd($test);
-        //  dd( $questionnaireGlobal);
+        
         return $this->render('questionnaire/index.html.twig', [
             'questionnaire'=>$questionnaire,
             'question'=>$question,
             'reponseProf'=>$reponseProf,
-            'form' => $form->createView(), // cela construit la view de ton formulaire d'apres le FormType
+            'form' => $form->createView(), // cela construit la view formulaire d'apres le FormType
             
             
         ]);
