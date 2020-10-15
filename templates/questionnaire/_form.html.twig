@@ -19,18 +19,13 @@
                     <div class=" row questionwrapper" 
                     data-prototype-reponse="{{ form_widget(form.questions.vars.prototype.children['reponseProfs'].vars.prototype)|e('html_attr') }}"
                     data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}" 
-                    {# data-index-reponse ="{{ form.questions.vars.prototype.children['reponseProfs']|length }}" #}
                     data-index="{{ form.questions|length }}"
-
                     data-index-reponse="{{ form.questions.vars.prototype.children['reponseProfs']|length }}">
-                    {# {{dump(form.questions.vars.prototype.children['reponseProfs']|length )}} #}
                             {% for quest in form.questions %} 
                                 {% for rep in quest.reponseProfs %} 
                         
                                 {% endfor %}
-                                    
-                            
-                            {% endfor %}  
+                             {% endfor %}  
                     </div>
                     
          

@@ -7,7 +7,7 @@ use App\Entity\Question;
 use App\Entity\Questionnaire;
 
 use App\Entity\ReponseProf;
-use App\Entity\TypeReponse;
+
 use App\Entity\User;
 
 use App\Form\QuestionnaireType;
@@ -49,31 +49,13 @@ class QuestionnaireController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-
-                
-           
             $entityManager = $this->getDoctrine()->getManager();
-        
-            foreach($questionnaire->getQuestions() as $question){
-                $questionnaire->addQuestion($question);
-                $entityManager->persist($question);
-
-            }
-            foreach($question->getReponseProfs() as $reponseProf){
-                $question->addReponseProf($reponseProf);
-                $entityManager->persist($reponseProf);
-            }
             $entityManager->persist($questionnaire);
-           
-            
-             
-             
-           
             $entityManager->flush();
 
         }
 
-        
+        // dd($questionnaire);
         return $this->render('questionnaire/index.html.twig', [
             'questionnaire'=>$questionnaire,
             'question'=>$question,

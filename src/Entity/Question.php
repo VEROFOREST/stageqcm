@@ -47,7 +47,7 @@ class Question
     private $typeReponse;
 
     /**
-     * @ORM\OneToMany(targetEntity=ReponseProf::class, mappedBy="question")
+     * @ORM\OneToMany(targetEntity=ReponseProf::class, mappedBy="question",  cascade={"persist"} )
      */
     private $reponseProfs;
 
