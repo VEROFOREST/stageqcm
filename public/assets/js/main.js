@@ -68,9 +68,8 @@ function addReponseForm($collectionReponse, $nouveauReponse) {
   console.log(indexRep)
 
 
-  // Replace '__name__' in the prototype's HTML to
-  // instead be a number based on how many items we have
-  const newForm = prototype.replace(/__rep_prot__/g, 'index');
+  // remplace le nom  '_rep_prot__'dans le prototype's HTML avec le nombre de l'indexRep
+  const newForm = prototype.replace(/__rep_prot__/g, 'indexRep');
 
   // increase the index with one for the next item
   $collectionReponse.setAttribute('data-index-reponse', indexRep + 1);
