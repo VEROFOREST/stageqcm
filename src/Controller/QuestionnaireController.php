@@ -41,17 +41,7 @@ class QuestionnaireController extends AbstractController
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
-        // $questionnaire->addQuestion($question);
-
         
-
-        $questionnaire=(new Questionnaire())
-                
-                    
-                ->addQuestion($question);
-               
-        $question->addReponseProf($reponseProf);
-                
        
        
         $form=$this->createForm(QuestionnaireType::class,$questionnaire);
@@ -59,15 +49,23 @@ class QuestionnaireController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+
             //    dd($questionnaireGlobal);      
-           $question->getReponseProfs();
+           
             $entityManager = $this->getDoctrine()->getManager();
         
+            foreach($questionnaire->getQuestions() as $question){
+                $questionnaire->addQuestion($question);
+                $entityManager->persist($question);
+
+            }
+            foreach($question->getReponseProfs() as $reponseProf){
+                $question->addReponseProf($reponseProf);
+                $entityManager->persist($reponseProf);
+            }
             $entityManager->persist($questionnaire);
-            $question->setQuestionnaire($questionnaire);
-            $entityManager->persist($question);
-            $reponseProf->setQuestion($question);
-            $entityManager->persist($reponseProf);
+           
+            
              
              
            

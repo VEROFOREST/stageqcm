@@ -45,7 +45,7 @@ class Questionnaire
     private $matiere;
 
     /**
-     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="questionnaire",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="questionnaire")
      */
     private $questions;
 
