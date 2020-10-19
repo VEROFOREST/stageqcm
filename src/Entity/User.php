@@ -58,6 +58,9 @@ class User implements UserInterface
      */
     private $sessions;
 
+   
+
+
     public function __construct()
     {
         $this->matieres = new ArrayCollection();
@@ -221,4 +224,5 @@ class User implements UserInterface
 
         return $this;
     }
+   
 }

@@ -26,7 +26,7 @@ class Matiere
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="matieres")
-     *  @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+    
     */
     private $user;
 

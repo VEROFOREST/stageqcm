@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Matiere;
 use App\Entity\Questionnaire;
+use App\Entity\Session;
 use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +22,13 @@ class QuestionnaireType extends AbstractType
             ->add('matiere',EntityType::class, array(
                     'class' => Matiere::class,
                     'choice_label' => 'nom',
-                    'multiple'  => false,
+                    // 'multiple'  => false,
+                    'mapped'=>true,
+                    ))
+            ->add('session', EntityType::class, array(
+                    'class' => Session::class,
+                    'choice_label' => 'nom',
+                    // 'multiple'  => false,
                     'mapped'=>true,
                     ))
             ->add('startedAt',DateTimeType::class,[

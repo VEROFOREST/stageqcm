@@ -32,6 +32,7 @@ class QuestionnaireController extends AbstractController
     public function index(MatiereRepository $matiereRepository, TypeReponseRepository $typeReponseRepository)
     {
         
+        
 
         return $this->render('questionnaire/index.html.twig', [
             'matiere'=>$matiereRepository->findAll(),
@@ -47,8 +48,17 @@ class QuestionnaireController extends AbstractController
      */
     public function new( User $user,Request $request,MatiereRepository $matiereRepository)
     {   
-    //    $matiereProf=$matiereRepository->getMatiereUser();
-    //    dd($matiereProf);
+      $matieresProf= $user->getMatieres();
+      
+    //     foreach ($matieresProf as $matiereProf) {
+    //         $matiereProf->getNom();
+    //         dd( $matiereProf->getNom());
+    //     }
+        // $matiereProf=$matiereRepository->findByUser($user);
+        // dd($matiereProf);
+
+
+
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
@@ -68,6 +78,7 @@ class QuestionnaireController extends AbstractController
 
         // dd($questionnaire);
         return $this->render('questionnaire/index.html.twig', [
+            'test'=>$matieresProf,
             'questionnaire'=>$questionnaire,
             'question'=>$question,
             'reponseProf'=>$reponseProf,

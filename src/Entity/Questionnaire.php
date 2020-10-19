@@ -49,6 +49,11 @@ class Questionnaire
      */
     private $questions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Session::class, inversedBy="questionnaires")
+     */
+    private $session;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -152,6 +157,18 @@ class Questionnaire
                 $question->setQuestionnaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): self
+    {
+        $this->session = $session;
 
         return $this;
     }

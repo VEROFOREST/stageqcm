@@ -24,16 +24,25 @@ class Session
      */
     private $nom;
 
+    
+
+    /**
+     * @ORM\OneToMany(targetEntity=Questionnaire::class, mappedBy="session")
+     */
+    private $questionnaires;
+
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sessions")
      */
     private $user;
 
    
+   
 
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->questionnaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,6 +58,38 @@ class Session
     public function setNom(?string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    
+    /**
+     * @return Collection|Questionnaire[]
+     */
+    public function getQuestionnaires(): Collection
+    {
+        return $this->questionnaires;
+    }
+
+    public function addQuestionnaire(Questionnaire $questionnaire): self
+    {
+        if (!$this->questionnaires->contains($questionnaire)) {
+            $this->questionnaires[] = $questionnaire;
+            $questionnaire->setSession($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionnaire(Questionnaire $questionnaire): self
+    {
+        if ($this->questionnaires->contains($questionnaire)) {
+            $this->questionnaires->removeElement($questionnaire);
+            // set the owning side to null (unless already changed)
+            if ($questionnaire->getSession() === $this) {
+                $questionnaire->setSession(null);
+            }
+        }
 
         return $this;
     }
@@ -78,6 +119,7 @@ class Session
 
         return $this;
     }
+
 
     
 }

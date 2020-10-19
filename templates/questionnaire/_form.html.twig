@@ -1,15 +1,18 @@
  {{ form_start(form) }}
     <h3>Questionnaire</h3>
     <div class="container">
-        
-         {{form_label(form.matiere, 'Matière', { 'attr': {'class': 'foo'} } )}}
-         {{ form_widget(form.matiere,{'attr': {'class': "form-control",}} )}}
+                
+            {{form_label(form.matiere, 'Matière', { 'attr': {'class': 'foo'} } )}}
+            {{ form_widget(form.matiere,{'attr': {'class': "form-control"}} )}}
+            {{dump(test)}}
+            {{form_label(form.session, 'Session', { 'attr': {'class': 'foo'} } )}}
+            {{ form_widget(form.session,{'attr': {'class': "form-control",}} )}}
             {{ form_label(form.startedAt,'commence le', { 'attr': {'class': 'foo'} } )}} 
             {{ form_widget(form.startedAt )}}
             {{ form_label(form.stoppedAt,'s\'arrête le', { 'attr': {'class': 'foo'}} )}} 
             {{ form_widget(form.stoppedAt)}}
             {{ form_label(form.baremeTot,'Barème total ?', { 'attr': {'class': 'foo'}})}} 
-            {{ form_widget(form.baremeTot,{'attr': {'class': "form-control",}})}}
+            {{ form_widget(form.baremeTot,{'attr': {'class': "form-control"}})}}
             {{ form_label(form.nbreQuestion,'nombre de questions',{ 'attr': {'class': 'foo'}})}} 
             {{ form_widget(form.nbreQuestion,{'attr': {'class': "nbrequestion",}})}}
     
