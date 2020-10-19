@@ -4,12 +4,14 @@ namespace App\Form;
 
 use App\Entity\Matiere;
 use App\Entity\Questionnaire;
-
+use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class QuestionnaireType extends AbstractType
 {
@@ -22,8 +24,22 @@ class QuestionnaireType extends AbstractType
                     'multiple'  => false,
                     'mapped'=>true,
                     ))
-            ->add('startedAt')
-            ->add('stoppedAt')
+            ->add('startedAt',DateTimeType::class,[
+                    'placeholder' => [
+                        'year' => 'Année',
+                         'month' => 'Mois',
+                          'day' => 'Jour',
+                    ],
+                    'widget' => 'single_text',
+                    'attr' => ['class' => 'js-datepicker']])
+            ->add('stoppedAt',DateTimeType::class,[
+                    'placeholder' => [
+                        'year' => 'Année',
+                         'month' => 'Mois',
+                          'day' => 'Jour',
+                    ],
+                    'widget' => 'single_text',
+                    'attr' => ['class' => 'js-datepicker']])
             ->add('nbreQuestion')
             ->add('baremeTot')
             ->add('questions', CollectionType::class, array(

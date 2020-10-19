@@ -25,9 +25,12 @@ class Matiere
     private $nom;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class)
-     */
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="matieres")
+     *  @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+    */
     private $user;
+
+ 
 
     
 
@@ -79,5 +82,6 @@ class Matiere
         return $this;
     }
 
+    
     
 }

@@ -25,9 +25,11 @@ class Session
     private $nom;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class)
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sessions")
      */
     private $user;
+
+   
 
     public function __construct()
     {
@@ -76,4 +78,6 @@ class Session
 
         return $this;
     }
+
+    
 }

@@ -14,19 +14,25 @@ use App\Form\QuestionnaireType;
 
 use App\Repository\MatiereRepository;
 use App\Repository\TypeReponseRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+
+
 class QuestionnaireController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_PROF")
      * @Route("/questionnaire", name="questionnaire")
      */
     public function index(MatiereRepository $matiereRepository, TypeReponseRepository $typeReponseRepository)
     {
+        
+
         return $this->render('questionnaire/index.html.twig', [
             'matiere'=>$matiereRepository->findAll(),
             'typeRep'=>$typeReponseRepository->findAll(),
@@ -34,10 +40,15 @@ class QuestionnaireController extends AbstractController
         ]);
     }
     /**
+     *  
+     * @IsGranted("ROLE_PROF")
+     *
      * @Route("/questionnaire/new/{id}", name="questionnaire_new")
      */
     public function new( User $user,Request $request,MatiereRepository $matiereRepository)
-    {
+    {   
+    //    $matiereProf=$matiereRepository->getMatiereUser();
+    //    dd($matiereProf);
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();

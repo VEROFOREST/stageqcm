@@ -87,3 +87,7 @@ function addReponseForm($collectionReponse, $question, indexQuestion) {
 
   $question.insertAdjacentHTML("beforeend", newForm);
 }
+// date picker
+  jQuery(document).ready(function() {
+            $('.js-datepicker').datepicker();
+        });

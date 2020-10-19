@@ -5,20 +5,26 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-around">
+            {% if is_granted("ROLE_PROF") %}
+                
+         
             <div class="col-md-4">
               <a class="btn btn-primary btn-lg" href="{{ path('questionnaire_new', {'id': user.id})}}"> Créer un questionnaire</a>
               
             </div>
+            
             <div class="col-md-4">
                 
                 <button class="btn btn-primary btn-lg" > Corriger</button>
             </div>
-        
+             {% endif %}
+             {% if is_granted("ROLE_USER") %}
+
             <div class="col-md-4">
-                <button class="btn btn-primary btn-lg" > Répondre au questionnaire</button>
+                <button class="btn btn-primary btn-lg" href="{{ path('reponse_eleve_new', {'id': user.id})}}"> Répondre au questionnaire</button>
             </div>
        
-            
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-md-4">
