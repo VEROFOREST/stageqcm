@@ -1,15 +1,12 @@
-{# {# {{ form_start(form) }}
+{# {# {# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }} #}
 
-<div class="container">
+{# <div class="container">
     {{ form_start(form) }}
    
-   
-  
-    
-        <div class="form-group col-md-12">
+    <div class="form-group col-md-12">
            {{form_label(form.user.nom, 'NOM', { 'attr': {'class': 'foo'} }) }}
            
             
@@ -29,7 +26,7 @@
                     </div>
                 
         </div>
-    </div>
+     #} #}
      {# <div class="form-row">
     
         <div class="form-group col-md-12">
@@ -78,8 +75,8 @@
                 {% block _product_dateNaissance_widget %}
                     <div class="form-control"> #}
                         {# {{ prospect.dateNaissance }} #}
-                     {# </div>
-                {% endblock %}
+                     {# { </div> #}
+                {# {% endblock %}
         </div>
         <div class="form-group col-md-6">
            {{form_label(form.prospect.lieuNaissance, 'à : ', { 'attr': {'class': 'foo'} }) }}
@@ -140,7 +137,7 @@
  
         </div>
     </div>
-        {# <a class="btn btn-info btn-lg float-left" href="{{ path('parcours_new')}}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        { <a class="btn btn-info btn-lg float-left" href="{{ path('parcours_new')}}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
         <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
         </svg>  Mon parcours</a> #}
@@ -152,9 +149,10 @@
         </svg></button>   
 
     
-</div>
+</div> #}
   
 
   
 
-  {{ form_end(form) }}  
+   {# {{ form_end(form) }}   
+  </div>   #}

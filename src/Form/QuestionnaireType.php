@@ -8,6 +8,7 @@ use App\Entity\Session;
 use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,15 +19,20 @@ class QuestionnaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
-            ->add('matiere',EntityType::class, array(
-                    'class' => Matiere::class,
-                    'choice_label' => 'nom',
+            ->add('matiere',ChoiceType::class, array(
+                    // 'class' => Matiere::class,
+                    'choices' =>  $options['matieresProf'],
+                    'choice_label'=> 'nom',
+                    'choice_value' =>'id',
                     // 'multiple'  => false,
                     'mapped'=>true,
                     ))
-            ->add('session', EntityType::class, array(
-                    'class' => Session::class,
+            ->add('session', ChoiceType::class, array(
+                    // 'class' => Session::class,
+                    'choices' =>  $options['sessionsProf'],
+                    'choice_value' =>'id',
                     'choice_label' => 'nom',
                     // 'multiple'  => false,
                     'mapped'=>true,
@@ -73,6 +79,8 @@ class QuestionnaireType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Questionnaire::class,
+            'matieresProf'=> null,
+            'sessionsProf'=> null,
            
 
 

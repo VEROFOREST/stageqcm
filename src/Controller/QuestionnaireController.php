@@ -14,6 +14,7 @@ use App\Form\QuestionnaireType;
 
 use App\Repository\MatiereRepository;
 use App\Repository\TypeReponseRepository;
+use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
@@ -46,26 +47,23 @@ class QuestionnaireController extends AbstractController
      *
      * @Route("/questionnaire/new/{id}", name="questionnaire_new")
      */
-    public function new( User $user,Request $request,MatiereRepository $matiereRepository)
+    public function new( User $user,Request $request,MatiereRepository $matiereRepository,UserRepository $userRepository)
     {   
+    //  obtenir les matieres et sessions qui concernent le prof connectés
+         
       $matieresProf= $user->getMatieres();
-      
-    //     foreach ($matieresProf as $matiereProf) {
-    //         $matiereProf->getNom();
-    //         dd( $matiereProf->getNom());
-    //     }
-        // $matiereProf=$matiereRepository->findByUser($user);
-        // dd($matiereProf);
-
-
+      $sessionsProf=$user->getSessions();
+    
 
         $questionnaire =new Questionnaire();
         $question =new Question();
         $reponseProf= new ReponseProf();
         
+    //    permet de passer les matieres pour le formtype et les sessions pour le formtype qui est en choices
        
-       
-        $form=$this->createForm(QuestionnaireType::class,$questionnaire);
+        $form=$this->createForm(QuestionnaireType::class,$questionnaire,
+        array('matieresProf' => $matieresProf,
+                'sessionsProf'=>$sessionsProf));
        
         $form->handleRequest($request);
         
@@ -76,9 +74,9 @@ class QuestionnaireController extends AbstractController
 
         }
 
-        // dd($questionnaire);
+      
         return $this->render('questionnaire/index.html.twig', [
-            'test'=>$matieresProf,
+          
             'questionnaire'=>$questionnaire,
             'question'=>$question,
             'reponseProf'=>$reponseProf,

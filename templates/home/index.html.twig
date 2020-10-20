@@ -18,10 +18,12 @@
                 <button class="btn btn-primary btn-lg" > Corriger</button>
             </div>
              {% endif %}
+
              {% if is_granted("ROLE_USER") %}
 
             <div class="col-md-4">
-                <button class="btn btn-primary btn-lg" href="{{ path('reponse_eleve_new', {'id': user.id})}}"> Répondre au questionnaire</button>
+               
+                <a  class="btn btn-primary btn-lg" href="{{ path('reponse_eleve_new', {'id': user.id})}}"> Répondre au questionnaire</a>
             </div>
        
             {% endif %}

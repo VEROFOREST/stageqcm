@@ -3,5 +3,265 @@
 {% block title %}Reponses au questionnaire{% endblock %}
 
 {% block body %}
-{% include "reponse_eleve/_form.html.twig" %}
+<div class="container">
+  <h1 class="show">Questionnaire de {{questionnaireEleve.matiere}}</h1>
+
+  <form id="reponseEleve-form" method="post" action="{{path("reponse_eleve_store",{'id':user.id})}}">
+      {# <input type="hidden" name="prospect_id" value="{{ prospect.id }}" >
+       {# <input type="hidden" name="prospect_date" value="{{ prospect.id }}" > #}
+      
+      {# <div class="form-check-inline">
+      
+        
+        <input class="form-check-input" name="CategFormation" type="radio" value="1" id="exampleRadios1" checked>
+        <label class="form-check-label"  for="exampleRadios1" value="1">
+        Contrat de formation (formation initiale)
+        </label>
+      </div>
+      <div class="form-check-inline">
+        
+       
+        <input class="form-check-input" name="CategFormation" type="radio" value="2" id="exampleRadios2" >
+         <label class="form-check-label" for="exampleRadios2">
+          Convention de formation (formation en alternance)
+        </label>
+      </div> #}
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFormation">Nom </label>
+          <input type="text" class="form-control" id="inputFormation" value="{{user.nom}}">
+        </div>
+      
+     
+        <div class="form-group col-md-6">
+          <label for="inputDuree">Prénom</label>
+          <input type="text" class="form-control" id="inputDuree" value="{{user.prenom}}">
+        </div>
+      </div>
+      
+     
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputSession">Session</label>
+          <input type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session}}" >
+        </div>
+      
+      
+        <div class="form-group col-md-6">
+          
+           <label for="inputLieu">barème total</label>
+          <input type="text" class="form-control" id="inputLieu" value="{{questionnaireEleve.baremeTot}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="inputContenu">Nombre de questions </label>
+          <input type="textarea" class="form-control" id="inputContenu" value="{{questionnaireEleve.nbreQuestion}}" >       
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputNom">NOM :</label>
+          <input type="text" class="form-control" id="inputNom"value="{{prospect.nom}}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPrenom">PRENOM :</label>
+          <input type="text" class="form-control" id="inputPrenom" value="{{prospect.prenom}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Adresse :</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"value="{{prospect.adresse}}">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">Ville :</label>
+          <input type="text" class="form-control" id="inputCity" value="{{prospect.ville}}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputState">CP :</label>
+          <input id="inputState" class="form-control"value="{{prospect.cp}}">
+        </div>
+      </div>
+     <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputTel">Tel :</label>
+          <input type="text" class="form-control" id="inputTel" value="{{prospect.tel}}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputMail">Mail :</label>
+          <input id="inputMail" class="form-control"value="{{prospect.email}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputDateNaissance">Né(e) le :</label>
+          <input type="text" class="form-control" id="inputDateNaissance" value="{{prospect.dateNaissance|date("m/d/y",false)}}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputLieuNaissance">à :</label>
+          <input id="inputLieuNaissance" class="form-control"value="{{prospect.lieuNaissance}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">Dépt naissance</label>
+          <input type="text" class="form-control" id="inputCity" value="{{prospect.deptNaissance}}">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputState">Nationalité :</label>
+          <input id="inputState" class="form-control"value="{{prospect.nationalite}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputDiplomeCours">Diplôme en cours</label>
+          <input type="text" class="form-control" id="inputDiplomeCours" value="{{prospect.parcours.encoursDiplome}}" placeholder="à compléter">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputDiplomeObtenu">Diplôme obtenu :</label>
+          <input id="inputDiplomeObtenu" class="form-control"value="{{prospect.parcours.dernierDiplome}}">
+            
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputHandicap">Handicap :</label>
+          <input id="inputHandicap" class="form-control"value="{{prospect.parcours.handicap}}">
+            
+        </div>
+        
+      </div>
+    
+      <div class="form-group col-md-4">
+        <label for="inputCoutFormation">Coût de la formation</label>
+        <input type="text" class="form-control" id="inputCoutFormation"  value="{{prospect.parcours.formation.coutFormation}}">
+      
+      <div class="form-check">
+ 
+       
+        {% if (prospect.parcours.formation.matSupp) %}
+         <label for="form-check-label">Matériel supplémentaire  </label>
+        <input class="form-check-input-left" type="checkbox" id="MatCheck1" checked>
+               
+        {% endif %}    
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-12">
+        <label  for="ChargeDe">
+          <h6>A la charge de : </h6>
+          </label>
+        </div>
+        
+      </div>
+      <div class="form-row">
+         <div class="form-group col-md-12">
+        <div class="form-check-inline">
+          
+          <input class="form-check-input" name="ChargeDe" type="radio" checked="checked" value="1" id="exampleRadios3">
+          <label class="form-check-label" for="exampleRadios3" >
+            Intégralement du candidat
+          </label>
+        </div>
+        <div class="form-check-inline">
+          
+          <input class="form-check-input" name="ChargeDe" type="radio" value="2" id="exampleRadios4" checked="checked" onclick="txtInput()">
+          <label class="form-check-label" for="exampleRadios4">
+            Partiellement du candidat, 
+          
+          </label>
+          <div class="form-group col-md-12">
+          {# {% if (pre_inscription.chargeDe.id as "(2)") %} #}
+          <div id='montantpartiel'>  
+         <label for="inputmontantpartiel">Montant :</label>
+          <input type="text" class="form-control" id="inputmontantpartiel" name="montantCandidat" value="">
+          {# {% endif %} #}
+          </div>
+        </div>
+
+        </div>
+        <div class="form-check-inline">
+          
+          <input class="form-check-input" name="ChargeDe" type="radio" value="3" id="exampleRadios5tri" checked="checked" onclick="txtstructure();">
+          <label class="form-check-label" for="exampleRadios5tri">
+          Structure externe : 
+          </label>
+          <div id="nomstructure">
+            <div class="form-group col-md-12 ">
+                <label for="nomstructure">Nom :</label>
+                <input type="text" class="form-control" name="nomStructure" id="nomstructurefinan"  value="">
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label" for="exampleRadios5bis">
+                Paiement validé par la structure
+                </label>
+                <input class="form-check-input-left" name="validePaiement" type="radio" value="true" id="exampleRadios5bis" >
+            </div>
+          </div>
+         
+        
+        </div>
+        </div>
+        
+          <label  for="Financement">
+           <h6> Mode de paiement de la formation : </h6>
+            </label>
+        
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check">
+            
+            <input class="form-check-input" name="financement"  type="radio" value="1" id="exampleRadios6" checked="checked">
+            <label class="form-check-label " for="exampleRadios6">
+              Alternance (Alpha PRIMO)
+            </label>
+          
+          </div>
+          <div class="form-check">
+            
+            <input class="form-check-input" name="financement" type="radio" value="2" id="exampleRadios7" >
+            <label class="form-check-label" for="exampleRadios7">
+              CPF (Alpha PRIMO)
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="form-check-input"name="financement"  type="radio" value="3" id="exampleRadios8" >
+            <label class="form-check-label" for="exampleRadios8">
+            Continue (Alpha PRIMO)
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="form-check-input" name="financement"  type="radio" value="4" id="exampleRadios9" >
+            <label class="form-check-label" for="exampleRadios9">
+            Formation initiale Conduisant à un diplôme d'état (GROUPE ARES MATHZAP FORMATION)
+            </label>
+          </div>
+          <div class="form-check">
+            
+            <input class="form-check-input"name="financement" type="radio" value="5" id="exampleRadios10" >
+            <label class="form-check-label" for="exampleRadios10">
+            Formation privée (GROUPE ARES MATHZAP FORMATION)
+            </label>
+          </div>
+        </div>
+      </div>
+    
+  
+    <button id="reponseEleve" type="submit" class="btn btn-primary btn-lg float-right">Envoyer<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </button>
+      
+
+  </form>
+  
+
+    {# <a href="{{ path('pre_inscription_index') }}">back to list</a> #}
+</div>
+{% endblock %}
+
 {% endblock %}
