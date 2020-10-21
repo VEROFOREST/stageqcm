@@ -25,7 +25,9 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputSession">Session</label>
-          <input name="session" type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session.nom}}" >
+        <input name="session" type="hidden" id="input{{questionnaireEleve.session.id}}" value="{{questionnaireEleve.session.id}}">
+         {{ dump(questionnaireEleve.session.id)}}
+          <input  type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session.nom}}" >
         </div>
       
       

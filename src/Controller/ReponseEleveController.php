@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseProfRepository;
+use App\Repository\SessionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,7 @@ class ReponseEleveController extends AbstractController
      * @Route("/reponse/eleve/store/{id}", name="reponse_eleve_store", methods={"GET","POST"})
      */
     public function store(User $user,Request $request,QuestionnaireRepository $questionnaireRepository,
-     QuestionRepository $questionRepository, ReponseProfRepository $reponseProfRepository )
+     QuestionRepository $questionRepository, ReponseProfRepository $reponseProfRepository,SessionRepository $sessionRepository )
 
      {  
          // recherche l'id de la session correspondant à eleve connectée
@@ -78,17 +79,26 @@ class ReponseEleveController extends AbstractController
        $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
        $questionsQuestionnaire = $questionnaireSession->getQuestions();
     
-         $reponseEleve = new ReponseEleve();
+        //  $reponseEleve = new ReponseEleve();
         $sessionEleve=$request->get('session');
+        $idSessionEleve = $sessionRepository->findOneById(['id'=>$sessionEleve]);
+        
 
         $question = $request->get('question');
         
         $reponsesform =$request->get('reponseEleve');
-        dd($reponsesform);
         // dd($reponsesform);
+        // dd($reponsesform);
+        foreach ($reponsesform as $quest=> $ReponseChoice) {
         
-
-
+             $reponseEleve = new ReponseEleve();
+             $reponseEleve->setSession($idSessionEleve);
+             $idReponseChoix=$reponseProfRepository->findOneById($ReponseChoice);
+             $reponseEleve->setReponseProf($idReponseChoix);
+           
+        }
+        dd($reponseEleve);
+        
          return $this->render('reponse_eleve/index.html.twig', [
              'user'=>$user,
             'questionnaireEleve'=>$questionnaireSession,
