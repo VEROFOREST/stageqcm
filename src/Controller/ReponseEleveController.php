@@ -49,18 +49,55 @@ class ReponseEleveController extends AbstractController
     //   recherche du questionnaire, questions et reponses correspondant à cette id, 
        $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
        $questionsQuestionnaire = $questionnaireSession->getQuestions();
-      
-      
-
-       
-
+    
         return $this->render('reponse_eleve/index.html.twig', [
             'user'=>$user,
             'questionnaireEleve'=>$questionnaireSession,
             'questions'=>$questionsQuestionnaire,
             
+            
            'controller_name' => 'ReponseEleveController',
         ]);
     }
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/reponse/eleve/store/{id}", name="reponse_eleve_store", methods={"GET","POST"})
+     */
+    public function store(User $user,Request $request,QuestionnaireRepository $questionnaireRepository,
+     QuestionRepository $questionRepository, ReponseProfRepository $reponseProfRepository )
+
+     {  
+         // recherche l'id de la session correspondant à eleve connectée
+       $sessionsEleve= $user->getSessions();
+        foreach ($sessionsEleve as $sessionEleve) {
+           $idsession= $sessionEleve->getId();
+        
+        }
+        
+    //   recherche du questionnaire, questions et reponses correspondant à cette id, 
+       $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
+       $questionsQuestionnaire = $questionnaireSession->getQuestions();
+    
+         $reponseEleve = new ReponseEleve();
+        $sessionEleve=$request->get('session');
+
+        $question = $request->get('question');
+        
+        $reponsesform =$request->get('reponseEleve');
+        dd($reponsesform);
+        // dd($reponsesform);
+        
+
+
+         return $this->render('reponse_eleve/index.html.twig', [
+             'user'=>$user,
+            'questionnaireEleve'=>$questionnaireSession,
+            'questions'=>$questionsQuestionnaire,
+            
+            'reponsesEleve'=> $reponseEleve 
+
+         ]);
+
+     }
 
 }

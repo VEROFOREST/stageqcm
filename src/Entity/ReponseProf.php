@@ -36,7 +36,7 @@ class ReponseProf
 
     /**
      * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponseProfs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, name="question_id", referencedColumnName="id")
      */
     private $question;
 
