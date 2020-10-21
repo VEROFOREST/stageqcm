@@ -93,8 +93,9 @@ class ReponseEleveController extends AbstractController
         
              $reponseEleve = new ReponseEleve();
              $reponseEleve->setSession($idSessionEleve);
-             $idReponseChoix=$reponseProfRepository->findOneById($ReponseChoice);
-                //  dd($idReponseChoix);
+             
+             $idReponseChoix = $reponseProfRepository->findOneById($ReponseChoice);
+             dd($idReponseChoix);
 
              $reponseEleve->setReponseProf($idReponseChoix);
              
