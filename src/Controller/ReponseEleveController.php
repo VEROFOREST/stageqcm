@@ -89,20 +89,21 @@ class ReponseEleveController extends AbstractController
         $reponsesform =$request->get('reponseEleve');
         // dd($reponsesform);
         // dd($reponsesform);
-        foreach ($reponsesform as $quest => $ReponseChoice) {
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($reponsesform as $ReponseChoice) {
         
              $reponseEleve = new ReponseEleve();
              $reponseEleve->setSession($idSessionEleve);
              
              $idReponseChoix = $reponseProfRepository->findOneById($ReponseChoice);
-             dd($idReponseChoix);
+            //  dd($idReponseChoix);
 
              $reponseEleve->setReponseProf($idReponseChoix);
              
+                $entityManager->persist($reponseEleve);
            
         }
-             $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($reponseEleve);
+             
             $entityManager->flush();
         // dd($reponseEleve);
         
