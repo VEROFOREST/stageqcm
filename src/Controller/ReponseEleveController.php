@@ -55,6 +55,7 @@ class ReponseEleveController extends AbstractController
        
 
         return $this->render('reponse_eleve/index.html.twig', [
+            'user'=>$user,
             'questionnaireEleve'=>$questionnaireSession,
             'questions'=>$questionsQuestionnaire,
             

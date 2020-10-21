@@ -4,9 +4,9 @@
 
 {% block body %}
 <div class="container">
-  <h1 class="show">Questionnaire de {{questionnaireEleve.matiere}}</h1>
+  <h1 class="show">Questionnaire de {{questionnaireEleve.matiere.nom}}</h1>
 
-  <form id="reponseEleve-form" method="post" action="{{path("reponse_eleve_store",{'id':user.id})}}">
+  <form id="reponseEleve-form" method="post"">
       {# <input type="hidden" name="prospect_id" value="{{ prospect.id }}" >
        {# <input type="hidden" name="prospect_date" value="{{ prospect.id }}" > #}
       
@@ -43,7 +43,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputSession">Session</label>
-          <input type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session}}" >
+          <input type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session.nom}}" >
         </div>
       
       
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="form-row">
+      {# <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputNom">NOM :</label>
           <input type="text" class="form-control" id="inputNom"value="{{prospect.nom}}">
@@ -172,11 +172,11 @@
           </label>
           <div class="form-group col-md-12">
           {# {% if (pre_inscription.chargeDe.id as "(2)") %} #}
-          <div id='montantpartiel'>  
+          {# <div id='montantpartiel'>  
          <label for="inputmontantpartiel">Montant :</label>
           <input type="text" class="form-control" id="inputmontantpartiel" name="montantCandidat" value="">
           {# {% endif %} #}
-          </div>
+          {# </div>
         </div>
 
         </div>
@@ -261,7 +261,7 @@
   
 
     {# <a href="{{ path('pre_inscription_index') }}">back to list</a> #}
-</div>
-{% endblock %}
+{# </div> 
+{% endblock %}  #}
 
-{% endblock %}
+{% endblock %} 
