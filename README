@@ -179,3 +179,241 @@
                     <span class="btn btn-lg btn-primary" > Ajouter une question</span>
                     </a>
                     </div> #}
+                    -----------------------------------------------------
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ReponseEleve;
+use App\Entity\User;
+use App\Repository\QuestionnaireRepository;
+use App\Repository\QuestionRepository;
+use App\Repository\ReponseProfRepository;
+use App\Repository\SessionRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
+
+
+class ReponseEleveController extends AbstractController
+{
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/reponse/eleve", name="reponse_eleve")
+     */
+    public function index()
+
+    {
+        // $test=$questionRepository->findAll();
+       
+        return $this->render('reponse_eleve/index.html.twig', [
+            
+            'controller_name' => 'ReponseEleveController',
+        ]);
+    }
+    
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/reponse/eleve/new/{id}", name="reponse_eleve_new", methods={"GET","POST"})
+     */
+    public function new(User $user,Request $request,QuestionnaireRepository $questionnaireRepository,
+     QuestionRepository $questionRepository, ReponseProfRepository $reponseProfRepository )
+
+    {
+        // recherche l'id de la session correspondant à eleve connectée
+       $sessionsEleve= $user->getSessions();
+        foreach ($sessionsEleve as $sessionEleve) {
+           $idsession= $sessionEleve->getId();
+        
+        }
+        
+    //   recherche du questionnaire, questions et reponses correspondant à cette id, 
+       $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
+       $questionsQuestionnaire = $questionnaireSession->getQuestions();
+    
+        return $this->render('reponse_eleve/index.html.twig', [
+            'user'=>$user,
+            'questionnaireEleve'=>$questionnaireSession,
+            'questions'=>$questionsQuestionnaire,
+            
+            
+           'controller_name' => 'ReponseEleveController',
+        ]);
+    }
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/reponse/eleve/store/{id}", name="reponse_eleve_store", methods={"GET","POST"})
+     */
+    public function store(User $user,Request $request,QuestionnaireRepository $questionnaireRepository,
+     QuestionRepository $questionRepository, ReponseProfRepository $reponseProfRepository,SessionRepository $sessionRepository )
+
+     {  
+         // recherche l'id de la session correspondant à eleve connectée
+            $sessionsEleve= $user->getSessions();
+                foreach ($sessionsEleve as $sessionEleve) {
+                $idsession= $sessionEleve->getId();
+                
+                }
+        
+            //   recherche du questionnaire, questions et reponses correspondant à cette id, 
+            $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
+            $questionsQuestionnaire = $questionnaireSession->getQuestions();
+            
+        
+        $sessionEleve=$request->get('session');
+        $idSessionEleve = $sessionRepository->findOneById(['id'=>$sessionEleve]);
+        
+
+        $question = $request->get('question');
+        // recupération des réponses de l'éleve sous forme d'array
+        $reponsesform =$request->get('reponseEleve');
+        // pour chaque réponse de l'éléve, on va créer un nouvel objet 
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($reponsesform as $ReponseChoice) {
+        
+             $reponseDefinitiveEleve = new ReponseELeve();
+                // set des colonnes de la table reponseEleve
+             $reponseDefinitiveEleve->setSession($idSessionEleve);
+            //  on remonte à la réponse prof pour avoir le lien
+             $idReponseChoixProf = $reponseProfRepository->findOneById($ReponseChoice);
+            //  dd($idReponseChoixProf);
+                //set la réponseprof, qui nous permettra de remonter à la question
+             $reponseDefinitiveEleve->setReponseProf($idReponseChoixProf);
+                //   on va rechercher la réponse juste du prof
+            // $reponseProfOk = $idReponseChoixProf->getIsJust();
+            
+            // // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
+
+            // if ($reponseProfOk === false){
+            //     $reponseDefinitiveEleve->setIsJust(false);
+            //     //  $this->addFlash('danger', 'mauvaise réponse !');
+            // }
+            // else $reponseDefinitiveEleve->setIsJust(true);
+            // // si la réponse est juste, on lui applique le bareme de la question sinon on met 0
+            // if ($reponseDefinitiveEleve->getIsJust() === true){
+                    
+            //         $notequestion=$idReponseChoixProf->getQuestion()->getBaremeQuestion();
+            //     $reponseDefinitiveEleve->setNoteQuestion($notequestion);
+            // }
+            // else $reponseDefinitiveEleve->setNoteQuestion(0);
+               
+            // on va chercher le libelle de la réponse du prof et on le remet dans la libelle reponse du prof
+            $libellereponseDefinitiveEleve=$idReponseChoixProf->getLibelleReponse();
+            $reponseDefinitiveEleve->setReponseEleve($libellereponseDefinitiveEleve);             
+            $entityManager->persist($reponseDefinitiveEleve);
+           
+        }
+             
+            $entityManager->flush();
+                // $this->addFlash('success', 'Bonne Réponse !');
+        // dd($reponseEleve);
+        
+         return $this->render('reponse_eleve/index.html.twig', [
+             'user'=>$user,
+            'questionnaireEleve'=>$questionnaireSession,
+            'questions'=>$questionsQuestionnaire,
+            
+            'reponsesEleve'=> $reponseDefinitiveEleve 
+
+         ]);
+
+     }
+    
+}
+---------------------------------------------------------------------------------------
+{% extends 'base.html.twig' %}
+
+{% block title %}Reponses au questionnaire{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h1 class="show">Questionnaire  {{questionnaireEleve.matiere.nom}}</h1>
+  
+  <form id="reponseEleve-form" method="post" action="{{path("reponse_eleve_store",{'id':user.id})}}">
+   
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFormation">Nom </label>
+          <input type="text" class="form-control" id="inputFormation" value="{{user.nom}}">
+        </div>
+      
+     
+        <div class="form-group col-md-6">
+          <label for="inputDuree">Prénom</label>
+          <input type="text" class="form-control" id="inputDuree" value="{{user.prenom}}">
+        </div>
+      </div>
+      
+     
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputSession">Session</label>
+        <input name="session" type="hidden" id="input{{questionnaireEleve.session.id}}" value="{{questionnaireEleve.session.id}}">
+         {# {{ dump(questionnaireEleve.session.id)}} #}
+          <input  type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session.nom}}" >
+        </div>
+      
+      
+        <div class="form-group col-md-6">
+          
+           <label for="inputLieu">barème total</label>
+          <input type="text" class="form-control" id="inputLieu" value="{{questionnaireEleve.baremeTot}}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="inputContenu">Nombre de questions </label>
+          <input type="textarea" class="form-control" id="inputContenu" value="{{questionnaireEleve.nbreQuestion}}" >       
+        </div>
+      </div>
+      
+    {% for question in questions %}
+     
+      
+      <div id="question{{question.id}}" style="display:block">
+          <div class="form-group col-md-12 question">
+            <label for="inputNom">Question n° {{question.numero}}</label>
+          
+            <input  type="text" class="form-control" id="inputNom{{question.id}}" value="{{question.libelle}}">
+          </div>
+        {% for reponse in question.reponseProfs %}
+        <div class="form-row">
+            <input name="question" type="hidden" id="input{{question.id}}" value="{{question.id}}">
+            <div class="custom-control custom-checkbox">
+            {% set checked ='' %}
+            <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input" id="customCheck{{reponse.id}}" value="{{reponse.id}} {% if checked %} checked="checked"{% endif %}" onchange=" getcheckrep(this)" >
+        
+          
+            {{dump(reponse.id)}}
+              <label class="custom-control-label" for="customCheck{{reponse.id}}">{{reponse.libelleReponse}}</label>
+             
+            </div>
+        </div>
+      
+        {% endfor %}
+      <div id= "codeRep" ></div>
+      </div>
+        {%  if (question.id < questionnaireEleve.nbreQuestion) %}
+          <a onclick="gotoNextQuestion();" id="questionsuivante" class="btn btn-primary" href="{{user.id}}#inputNom{{question.id+1}}" >Question<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg></a>
+        {% endif %}
+      
+    {% endfor %}
+
+     <div id="btn submit">
+    <button id="reponseEleve" type="submit" class="btn btn-primary btn-lg float-right">Envoyer<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </button>
+      
+    </div>
+  </form>
+  
+
+
+{% endblock %} 

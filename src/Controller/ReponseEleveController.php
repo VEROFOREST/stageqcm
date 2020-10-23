@@ -8,12 +8,12 @@ use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseProfRepository;
 use App\Repository\SessionRepository;
+use Doctrine\ORM\Query\AST\Functions\LengthFunction;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
-
+use Symfony\Component\Validator\Constraints\Length;
 
 class ReponseEleveController extends AbstractController
 {
@@ -86,24 +86,52 @@ class ReponseEleveController extends AbstractController
 
         $question = $request->get('question');
         
-        $reponsesform =$request->get('reponseEleve');
+        $reponsesform =$request->get('reponseEleve',[]);
+        // dd($reponsesform);
         // dd($reponsesform);
         // dd($reponsesform);
         $entityManager = $this->getDoctrine()->getManager();
-        foreach ($reponsesform as $ReponseChoice) {
-        
+        // $longueur = count($reponsesform);
+        // dd($longueur);
+
+        # code...
+    
+        # code...
+    
+        foreach ($reponsesform as $quest=>$ReponseChoice) {
              $reponseEleve = new ReponseEleve();
+        
              $reponseEleve->setSession($idSessionEleve);
              
-             $idReponseChoix = $reponseProfRepository->findOneById($ReponseChoice);
+             $idReponseChoixProf = $reponseProfRepository->findOneById($ReponseChoice);
             //  dd($idReponseChoix);
-
-             $reponseEleve->setReponseProf($idReponseChoix);
+             $reponseEleve->setReponseProf($idReponseChoixProf);
              
-                $entityManager->persist($reponseEleve);
            
-        }
-             
+              //   on va rechercher la réponse juste du prof
+            $reponseProfOk = $idReponseChoixProf->getIsJust();
+            // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
+
+            if ($reponseProfOk === false){
+                $reponseEleve->setIsJust(false);
+                //  $this->addFlash('danger', 'mauvaise réponse !');
+            }
+            else $reponseEleve->setIsJust(true);
+            // si la réponse est juste, on lui applique le bareme de la question sinon on met 0
+            if ($reponseEleve->getIsJust() === true){
+                    
+                    $notequestion=$idReponseChoixProf->getQuestion()->getBaremeQuestion();
+                
+                $reponseEleve->setNoteQuestion($notequestion);
+            }
+            else $reponseEleve->setNoteQuestion(0);
+               
+            // on va chercher le libelle de la réponse du prof et on le remet dans la libelle reponse du prof
+            $libellereponseEleve=$idReponseChoixProf->getLibelleReponse();
+            $reponseEleve->setReponseEleve($libellereponseEleve);   
+            // unset($ReponseChoice);
+            $entityManager->persist($reponseEleve);
+    }         
             $entityManager->flush();
         // dd($reponseEleve);
         
@@ -112,7 +140,7 @@ class ReponseEleveController extends AbstractController
             'questionnaireEleve'=>$questionnaireSession,
             'questions'=>$questionsQuestionnaire,
             
-            'reponsesEleve'=> $reponseEleve 
+            // 'reponsesEleve'=> $reponseEleve 
 
          ]);
 

@@ -91,3 +91,40 @@ function addReponseForm($collectionReponse, $question, indexQuestion) {
   jQuery(document).ready(function() {
             $('.js-datepicker').datepicker();
         });
+
+// show next question
+// function gotoNextQuestion(){
+  
+//   var questionDiv = document.getElementById("question")
+//   console.log(questionDiv)
+//   var nbrequestion =document.getElementById("inputLieu")
+//   var valeurnbrequestion =nbrequestion.value
+//   if(questionDiv.style.display = 'none'){
+//   questionDiv.style.display = 'block';
+  
+//   }
+//   else
+//   questionDiv.style.display ='none';
+
+// }
+
+
+// function getcheckrep(checkEleve){
+//  var idRep =checkEleve.id
+//   var codeRep = document.getElementsByClassName('codeRep')
+//   // console.log (idRep++)
+//   console.log(codeRep)
+//   if(idRep="question1"){
+//     if(checkEleve.value) {
+
+//       codeRep.className = "just";
+//     }
+//   }
+
+
+
+
+
+
+
+}
