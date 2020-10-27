@@ -120,7 +120,7 @@ function getcheckrep(checkEleve){
   var valueRepData =checkEleve.dataset.rep
   // console.log(valueRepData);
   var idRep = checkEleve.id
-  console.log (checkEleve.id);
+  // console.log (checkEleve.id);
     var nbrequestion =document.getElementById("inputNbre").value
   // console.log(nbrequestion)
    
