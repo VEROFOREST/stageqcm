@@ -111,30 +111,36 @@ function addReponseForm($collectionReponse, $question, indexQuestion) {
 
 
 function getcheckrep(checkEleve){
-let valueRep =checkEleve.value
-console.log(valueRep);
-let idRep = checkEleve.id
-console.log (idRep);
-    let nbrequestion =document.getElementById("inputLieu").value
-  console.log(nbrequestion)
+//   for (i=1; i<=2 ; i++){
+//  var question = document.getElementById("question"+i)
+//     console.log(question.parentNode);
+//   }
+ var idReponse = document.getElementById("questionId");
+//  console.log (idReponse.value);
+  var valueRepData =checkEleve.dataset.rep
+  // console.log(valueRepData);
+  var idRep = checkEleve.id
+  console.log (checkEleve.id);
+    var nbrequestion =document.getElementById("inputNbre").value
+  // console.log(nbrequestion)
    
-//  const array = [checkEleve.id]    
-//  array.forEach(element => {
 //  console.log((array));
-  for (y=1 ; y<=2; y++){
+  for (y=1 ; y<=nbrequestion; y++){
+     var codeRep = document.getElementById("codeRep"+y);
+         console.log(codeRep)
+    if(valueRepData ==="1") {
    
-     let codeRep = document.getElementById("codeRep"+y);
-    // if(valueRep == 1) {
-    //      console.log(codeRep)
+      // const array = [checkEleve.id]    
+      // array.forEach(element => {
 
-     codeRep.classList.add('correct')  
-    }
-    // else 
-    // // codeRep.classList.remove('correct')
-    // codeRep.classList.toggle('wrong')
-  
-  // }
+     codeRep.classList.toggle('correct')  
     // });
+    }
+    else 
+    // codeRep.classList.remove('correct')
+    codeRep.classList.toggle('wrong')
+  
+  }
  
 
 }

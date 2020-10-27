@@ -34,37 +34,41 @@
         <div class="form-group col-md-6">
           
            <label for="inputLieu">barème total</label>
-          <input type="text" class="form-control" id="inputLieu" value="{{questionnaireEleve.baremeTot}}">
+          <input type="text" class="form-control" id="inputBareme" value="{{questionnaireEleve.baremeTot}}">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-12">
           <label for="inputContenu">Nombre de questions </label>
-          <input type="textarea" class="form-control" id="inputContenu" value="{{questionnaireEleve.nbreQuestion}}" >       
+          <input type="textarea" class="form-control" id="inputNbre" value="{{questionnaireEleve.nbreQuestion}}" >       
         </div>
       </div>
       
       {% for question in questions %}
-      
+      <div id="question{{question.id}}">
         <div class="form-group col-md-12 question">
           <label for="inputNom">Question n° {{question.numero}}</label>
          
           <input  type="text" class="form-control" id="inputNom{{question.id}}" value="{{question.libelle}}">
         </div>
-       {% for reponse in question.reponseProfs %}
+        {% for reponse in question.reponseProfs %}
        <div class="form-row">
         <input name="question" type="hidden" id="input{{question.id}}" value="{{question.id}}">
-       <div class="custom-control custom-checkbox">
-       {% set checked ='' %}
-       <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input" id="customCheck{{reponse.id}}" value="{{reponse.isJust}} {% if checked %} checked="checked"{% endif %}" onChange="getcheckrep(this)" >
+          <div class="custom-control custom-checkbox">
+            {% set checked ='' %}
+            <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input" id="customCheck{{reponse.id}}" value="{{reponse.id}} {% if checked %} checked="checked"{% endif %}" onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}">
        
        
-        <label class="custom-control-label" for="customCheck{{reponse.id}}">{{reponse.libelleReponse}}</label>
-      </div>
+            <label class="custom-control-label" for="customCheck{{reponse.id}}">{{reponse.libelleReponse}}</label>
+          </div>
+          {{dump(reponse.isJust)}}
        </div>
-      
       {% endfor %}
-      <div id="codeRep{{question.id}}"> </div>
+      </div>
+        {# <p><i class="material-icon">backup</i></p>  #}
+        <input value={{question.id}} id="questionId" hidden>
+        <div id="codeRep{{question.id}}" > </div>
+        
       {%  if (question.id < questionnaireEleve.nbreQuestion) %}
          <a data-toggle="modal" data-target=".bd-example-modal-sm" id="questionsuivante" class="btn btn-primary" href="{{user.id}}#inputNom{{question.id+1}}" >Passer à la question suivante</a>
       {% else %}

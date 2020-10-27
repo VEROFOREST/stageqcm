@@ -109,6 +109,7 @@ class ReponseEleveController extends AbstractController
              
            
               //   on va rechercher la réponse juste du prof
+            //   dd($idReponseChoixProf);
             $reponseProfOk = $idReponseChoixProf->getIsJust();
             // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
 
