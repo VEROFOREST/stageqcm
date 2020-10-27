@@ -109,22 +109,32 @@ function addReponseForm($collectionReponse, $question, indexQuestion) {
 // }
 
 
-// function getcheckrep(checkEleve){
-//  var idRep =checkEleve.id
-//   var codeRep = document.getElementsByClassName('codeRep')
-//   // console.log (idRep++)
-//   console.log(codeRep)
-//   if(idRep="question1"){
-//     if(checkEleve.value) {
 
-//       codeRep.className = "just";
-//     }
-//   }
+function getcheckrep(checkEleve){
+let valueRep =checkEleve.value
+console.log(valueRep);
+let idRep = checkEleve.id
+console.log (idRep);
+    let nbrequestion =document.getElementById("inputLieu").value
+  console.log(nbrequestion)
+   
+//  const array = [checkEleve.id]    
+//  array.forEach(element => {
+//  console.log((array));
+  for (y=1 ; y<=2; y++){
+   
+     let codeRep = document.getElementById("codeRep"+y);
+    // if(valueRep == 1) {
+    //      console.log(codeRep)
 
-
-
-
-
-
+     codeRep.classList.add('correct')  
+    }
+    // else 
+    // // codeRep.classList.remove('correct')
+    // codeRep.classList.toggle('wrong')
+  
+  // }
+    // });
+ 
 
 }
