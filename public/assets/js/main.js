@@ -93,54 +93,53 @@ function addReponseForm($collectionReponse, $question, indexQuestion) {
         });
 
 // show next question
-// function gotoNextQuestion(){
-  
-//   var questionDiv = document.getElementById("question")
-//   console.log(questionDiv)
-//   var nbrequestion =document.getElementById("inputLieu")
-//   var valeurnbrequestion =nbrequestion.value
-//   if(questionDiv.style.display = 'none'){
-//   questionDiv.style.display = 'block';
-  
-//   }
-//   else
-//   questionDiv.style.display ='none';
+function goToNextQuestion(id){
+  // console.log(id)
+  var questionDiv = document.getElementById("question"+id)
+  var reponses = document.querySelectorAll('input[type="checkbox"]')
+// console.log(reponses);
+  // console.log(questionDiv)
+ 
+  // var nbrequestion =document.getElementById("inputLieu")
+  // var valeurnbrequestion =nbrequestion.value
+  if(questionDiv.style.display = 'block'){
+  questionDiv.style.display = 'none';
 
-// }
-
-
-
-function getcheckrep(checkEleve){
-//   for (i=1; i<=2 ; i++){
-//  var question = document.getElementById("question"+i)
-//     console.log(question.parentNode);
-//   }
- var idReponse = document.getElementById("questionId");
-//  console.log (idReponse.value);
-  var valueRepData =checkEleve.dataset.rep
-  // console.log(valueRepData);
-  var idRep = checkEleve.id
-  // console.log (checkEleve.id);
-    var nbrequestion =document.getElementById("inputNbre").value
-  // console.log(nbrequestion)
-   
-//  console.log((array));
-  for (y=1 ; y<=nbrequestion; y++){
-     var codeRep = document.getElementById("codeRep"+y);
-         console.log(codeRep)
-    if(valueRepData ==="1") {
-   
-      // const array = [checkEleve.id]    
-      // array.forEach(element => {
-
-     codeRep.classList.toggle('correct')  
-    // });
-    }
-    else 
-    // codeRep.classList.remove('correct')
-    codeRep.classList.toggle('wrong')
   
   }
  
-
 }
+
+
+function getcheckrep(checkEleve){
+   console.log(checkEleve);
+
+    const correct = " <span class='material-icons md-55 alert-success'>check_circle_outline</span>"
+    const wrong ="<span class='material-icons md-55 alert-danger'>close</span>"
+  var valueRepData = checkEleve.dataset.rep;
+  console.log("valueRepData :", valueRepData);
+
+
+  var nbrequestion = +document.getElementById("inputNbre").value;
+  console.log("nbrequestion : ", nbrequestion);
+
+  var codeRep = document.getElementById("codeRep" + checkEleve.dataset.codequestion);
+
+  if (checkEleve.checked && valueRepData === "1") {
+    codeRep.innerHTML = correct;
+
+  } else {
+    codeRep.innerHTML = wrong;
+  }
+  //  checkEleve.setAttribute("readonly","");
+   checkEleve.setAttribute("disabled","");
+
+  console.log(codeRep);
+}
+
+    
+  
+  
+
+
+

@@ -26,7 +26,7 @@
         <div class="form-group col-md-6">
           <label for="inputSession">Session</label>
         <input name="session" type="hidden" id="input{{questionnaireEleve.session.id}}" value="{{questionnaireEleve.session.id}}">
-         {{ dump(questionnaireEleve.session.id)}}
+         {# {{ dump(questionnaireEleve.session.id)}} #}
           <input  type="text" class="form-control" id="inputSession" value="{{questionnaireEleve.session.nom}}" >
         </div>
       
@@ -45,44 +45,47 @@
       </div>
       
       {% for question in questions %}
-      <div id="question{{question.id}}">
+     
+      <div id="question{{question.id}}" style="display:block;"  >
         <div class="form-group col-md-12 question">
           <label for="inputNom">Question n° {{question.numero}}</label>
          
-          <input  type="text" class="form-control" id="inputNom{{question.id}}" value="{{question.libelle}}">
+          <input  type="text" class="form-control" id="inputNom{{question.id}}" value="{{question.libelle}}" data-question="{{question.id}}" >
         </div>
         {% for reponse in question.reponseProfs %}
        <div class="form-row">
         <input name="question" type="hidden" id="input{{question.id}}" value="{{question.id}}">
           <div class="custom-control custom-checkbox">
             {% set checked ='' %}
-            <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input" id="customCheck{{reponse.id}}" value="{{reponse.id}} {% if checked %} checked="checked"{% endif %}" onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}">
+            
+            <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve" id="customCheck{{reponse.id}}" value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}">
+            {# creation d'un input type hidden car l'attribut disabled n'envoient pas en bdd#}
+            <input   type="hidden" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve"  value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}">
        
        
             <label class="custom-control-label" for="customCheck{{reponse.id}}">{{reponse.libelleReponse}}</label>
           </div>
           {{dump(reponse.isJust)}}
-       </div>
+        </div>
+            
       {% endfor %}
-      </div>
-        {# <p><i class="material-icon">backup</i></p>  #}
-        <input value={{question.numero}} id="questionId" hidden>
-        <div id="codeRep{{question.numero}}" > </div>
+        <div id="codeRep{{question.id}}" > </div>                
         
-      {# {%  if (question.id <= questionnaireEleve.nbreQuestion) %} #}
-         <a data-toggle="modal" data-target=".bd-example-modal-sm" id="questionsuivante" class="btn btn-primary" href="{{user.id}}#inputNom{{question.id+1}}" >Passer à la question suivante</a>
-      
-      {# {% endif %} #}
+       
+        
+       {%  if (question.numero < questionnaireEleve.nbreQuestion) %} 
+       <div class="col text-center">
+         <a onClick="goToNextQuestion({{question.id}})" id="questionsuivante" class="btn btn-success material-icons md-36" href="{{user.id}}#inputNom{{question.id+1}}" >done_outline</a>
+        </div>
+      {% endif %} 
+      </div>
       
       
       {% endfor %}
+      <div class="col text-center">
+         <button  id="reponseEleve" type="submit" class="btn btn-danger btn-lg float-right">Envoi Définitif</button>
+     </div>
 
-         <button data-toggle="modal" data-target=".bd-example-modal-sm" id="reponseEleve" type="submit" class="btn btn-danger btn-lg float-right">Envoi Definitif<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-double-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-      <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-      </svg>
-    </button>
-     
   
     
       

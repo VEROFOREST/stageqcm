@@ -6,6 +6,7 @@ use App\Entity\ReponseEleve;
 use App\Entity\User;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\ReponseEleveRepository;
 use App\Repository\ReponseProfRepository;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\Query\AST\Functions\LengthFunction;
@@ -13,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
 
 class ReponseEleveController extends AbstractController
@@ -87,41 +89,39 @@ class ReponseEleveController extends AbstractController
         $question = $request->get('question');
         
         $reponsesform =$request->get('reponseEleve',[]);
+        // 
+        // dd($request->get('reponseEleve',[]));
         // dd($reponsesform);
         // dd($reponsesform);
         // dd($reponsesform);
         $entityManager = $this->getDoctrine()->getManager();
-        // $longueur = count($reponsesform);
-        // dd($longueur);
-
-        # code...
-    
-        # code...
-    
         foreach ($reponsesform as $quest=>$ReponseChoice) {
+        
              $reponseEleve = new ReponseEleve();
         
              $reponseEleve->setSession($idSessionEleve);
              
              $idReponseChoixProf = $reponseProfRepository->findOneById($ReponseChoice);
-            //  dd($idReponseChoix);
+            //  dd($idReponseChoixProf);
              $reponseEleve->setReponseProf($idReponseChoixProf);
              
            
               //   on va rechercher la réponse juste du prof
             //   dd($idReponseChoixProf);
             $reponseProfOk = $idReponseChoixProf->getIsJust();
+
             // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
 
             if ($reponseProfOk === false){
                 $reponseEleve->setIsJust(false);
-                //  $this->addFlash('danger', 'mauvaise réponse !');
+                
             }
             else $reponseEleve->setIsJust(true);
             // si la réponse est juste, on lui applique le bareme de la question sinon on met 0
             if ($reponseEleve->getIsJust() === true){
                     
                     $notequestion=$idReponseChoixProf->getQuestion()->getBaremeQuestion();
+                    // dd($idReponseChoixProf->getQuestion());
                 
                 $reponseEleve->setNoteQuestion($notequestion);
             }
@@ -135,7 +135,7 @@ class ReponseEleveController extends AbstractController
     }         
             $entityManager->flush();
         // dd($reponseEleve);
-        
+        return $this->redirectToRoute('confirmation_eleve',['id'=> $user->getId()]);
          return $this->render('reponse_eleve/index.html.twig', [
              'user'=>$user,
             'questionnaireEleve'=>$questionnaireSession,
@@ -146,5 +146,31 @@ class ReponseEleveController extends AbstractController
          ]);
 
      }
+        /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/reponse/eleve/confirmation/{id}", name="confirmation_eleve", methods={"GET","POST"})
+     */
+    public function confirm(User $user,ReponseEleveRepository $reponseEleveRepository){
+         $sessionsEleve= $user->getSessions();
+        foreach ($sessionsEleve as $sessionEleve) {
+           $idsession= $sessionEleve->getId();
+        
+        }
+        
+       $reponses= $reponseEleveRepository->findBySession($idsession);
+        // foreach ($reponses as $reponse) {
+          
+        //     $test=$reponse->getNoteQuestion();
+        
+        // }
+    //    dd($test);
+  
 
+       
+
+         return $this->render('reponse_eleve/confirmEnvoi.html.twig', [
+             'controller_name' => 'ReponseEleveController',
+         ]);
+
+    }
 }
