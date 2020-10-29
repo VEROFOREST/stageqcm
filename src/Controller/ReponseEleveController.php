@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Entity\ReponseEleve;
 use App\Entity\User;
 use App\Repository\QuestionnaireRepository;
@@ -150,7 +151,7 @@ class ReponseEleveController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route("/reponse/eleve/confirmation/{id}", name="confirmation_eleve", methods={"GET","POST"})
      */
-    public function confirm(User $user,ReponseEleveRepository $reponseEleveRepository){
+    public function confirm(User $user,ReponseEleveRepository $reponseEleveRepository,Question $questionRepository){
          $sessionsEleve= $user->getSessions();
         foreach ($sessionsEleve as $sessionEleve) {
            $idsession= $sessionEleve->getId();
@@ -158,18 +159,20 @@ class ReponseEleveController extends AbstractController
         }
         
        $reponses= $reponseEleveRepository->findBySession($idsession);
-        // foreach ($reponses as $reponse) {
-          
-        //     $test=$reponse->getNoteQuestion();
-        
-        // }
-    //    dd($test);
-  
+       $noteQCM=0;
+           foreach($reponses as $reponse){
+               $noteQCM += $reponse->getNoteQuestion();
+               $idReponseProf=$reponse->getReponseProf();
+            //    dd($idReponseProf);
+               
+           }
+       
 
        
 
          return $this->render('reponse_eleve/confirmEnvoi.html.twig', [
              'controller_name' => 'ReponseEleveController',
+             'noteQCM'=> $noteQCM,
          ]);
 
     }
