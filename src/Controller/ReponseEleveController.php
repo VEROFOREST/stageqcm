@@ -110,14 +110,16 @@ class ReponseEleveController extends AbstractController
               //   on va rechercher la réponse juste du prof
             //   dd($idReponseChoixProf);
             $reponseProfOk = $idReponseChoixProf->getIsJust();
+            // dump($reponseProfOk);
+            dump($reponseProfOk);
 
             // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
 
-            if ($reponseProfOk === false){
-                $reponseEleve->setIsJust(false);
+            if (!$reponseProfOk){
+                $reponseEleve->setIsJust($reponseProfOk);
                 
             }
-            else $reponseEleve->setIsJust(true);
+            else $reponseEleve->setIsJust($reponseProfOk);
             // si la réponse est juste, on lui applique le bareme de la question sinon on met 0
             if ($reponseEleve->getIsJust() === true){
                     
@@ -151,28 +153,53 @@ class ReponseEleveController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route("/reponse/eleve/confirmation/{id}", name="confirmation_eleve", methods={"GET","POST"})
      */
-    public function confirm(User $user,ReponseEleveRepository $reponseEleveRepository,Question $questionRepository){
+    public function confirm(User $user,QuestionnaireRepository $questionnaireRepository, ReponseEleveRepository $reponseEleveRepository,Question $questionRepository){
          $sessionsEleve= $user->getSessions();
         foreach ($sessionsEleve as $sessionEleve) {
            $idsession= $sessionEleve->getId();
-        
         }
+        $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
         
-       $reponses= $reponseEleveRepository->findBySession($idsession);
+       $questionsQuestionnaire = $questionnaireSession->getQuestions();
+       $totalnoteQuestion =0;
+        foreach ($questionsQuestionnaire as $question){
+            $totalnoteQuestion += $question->getBaremeQuestion();
+           $reponsesProf= $question->getReponseProfs();
+        //    dd($reponsesProf);
+                    
+        }
+     
+        $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
        $noteQCM=0;
-           foreach($reponses as $reponse){
-               $noteQCM += $reponse->getNoteQuestion();
-               $idReponseProf=$reponse->getReponseProf();
-            //    dd($idReponseProf);
-               
-           }
+    //    dd($reponsesEleve);
+   $questions = [];
+        foreach($reponsesEleve as $reponseEleve){
+            $noteQCM += $reponseEleve->getNoteQuestion();
+            $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
+        //    dd($reponsesProf);
+            
+            // $question = $reponseEleve->getReponseProf()->getQuestion();
+            // $idQuestion =$question->getId();
+        //    dd($idQuestion);
+            $noteQuestion = $question->getBaremeQuestion(); 
+            // dd($noteQuestion);
+            $noteunique = $reponseEleve->getNoteQuestion();
+        //    dd($noteunique);
+            
+        }
        
-
+            
        
 
          return $this->render('reponse_eleve/confirmEnvoi.html.twig', [
              'controller_name' => 'ReponseEleveController',
              'noteQCM'=> $noteQCM,
+             'notetotalQuestion'=>$totalnoteQuestion,
+             'questions'=>$questionsQuestionnaire,
+             'reponsesEleve'=>$reponsesEleve,
+             'reponsesProf'=>$reponsesProf,
+             'noteunique'=>$noteunique,
+             'question'=>$question,
          ]);
 
     }

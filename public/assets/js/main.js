@@ -114,8 +114,8 @@ function goToNextQuestion(id){
 function getcheckrep(checkEleve){
    console.log(checkEleve);
 
-    const correct = " <span class='material-icons md-55 alert-success'>check_circle_outline</span>"
-    const wrong ="<span class='material-icons md-55 alert-danger'>close</span>"
+    const correct = " <span class='material-icons md-55 text-success'>check_circle_outline</span>"
+    const wrong ="<span class='material-icons md-55 text-danger'>close</span>"
   var valueRepData = checkEleve.dataset.rep;
   console.log("valueRepData :", valueRepData);
 
@@ -132,7 +132,7 @@ function getcheckrep(checkEleve){
     codeRep.innerHTML = wrong;
   }
   //  checkEleve.setAttribute("readonly","");
-   checkEleve.setAttribute("disabled","");
+  //  checkEleve.setAttribute("disabled","");
 
   console.log(codeRep);
 }

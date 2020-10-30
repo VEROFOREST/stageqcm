@@ -60,12 +60,14 @@
             
             <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve" id="customCheck{{reponse.id}}" value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}">
             {# creation d'un input type hidden car l'attribut disabled n'envoient pas en bdd#}
-            <input   type="hidden" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve"  value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}">
+            
+            
+            {# <input   type="hidden" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve"  value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}"> #}
        
        
             <label class="custom-control-label" for="customCheck{{reponse.id}}">{{reponse.libelleReponse}}</label>
           </div>
-          {{dump(reponse.isJust)}}
+          {# {{dump(reponse.isJust)}} #}
         </div>
             
       {% endfor %}
@@ -73,7 +75,7 @@
         
        
         
-       {%  if (question.numero < questionnaireEleve.nbreQuestion) %} 
+       {%  if (question.numero <= questionnaireEleve.nbreQuestion) %} 
        <div class="col text-center">
          <a onClick="goToNextQuestion({{question.id}})" id="questionsuivante" class="btn btn-success material-icons md-36" href="{{user.id}}#inputNom{{question.id+1}}" >done_outline</a>
         </div>
