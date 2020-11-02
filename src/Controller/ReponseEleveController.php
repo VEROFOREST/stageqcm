@@ -90,13 +90,10 @@ class ReponseEleveController extends AbstractController
         $question = $request->get('question');
         
         $reponsesform =$request->get('reponseEleve',[]);
-        // 
+        
         // dd($request->get('reponseEleve',[]));
         // dd($reponsesform);
-        // dd($reponsesform);
-        // dd($reponsesform);
-       
-        // dd($repTextarea);
+        
         $entityManager = $this->getDoctrine()->getManager();
         foreach ($reponsesform as $quest=>$ReponseChoice) {
         
@@ -190,7 +187,7 @@ class ReponseEleveController extends AbstractController
         }
      
         $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
-        
+
        $noteQCM=0;
     //    dd($reponsesEleve);
         $questions = [];
@@ -199,14 +196,7 @@ class ReponseEleveController extends AbstractController
             $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
         //    dd($reponsesProf);
             
-            // $question = $reponseEleve->getReponseProf()->getQuestion();
-            // $idQuestion =$question->getId();
-        //    dd($idQuestion);
-            $noteQuestion = $question->getBaremeQuestion(); 
-            // dd($noteQuestion);
-            $noteunique = $reponseEleve->getNoteQuestion();
-        //    dd($noteunique);
-            
+         
         }
        
             
@@ -219,8 +209,7 @@ class ReponseEleveController extends AbstractController
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=>$reponsesEleve,
              'reponsesProf'=>$reponsesProf,
-            //  'noteunique'=>$noteunique,
-             'question'=>$question,
+            
          ]);
 
     }
