@@ -58,6 +58,11 @@ class User implements UserInterface
      */
     private $sessions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ReponseEleve::class, mappedBy="user")
+     */
+    private $reponseEleves;
+
    
 
 
@@ -65,6 +70,7 @@ class User implements UserInterface
     {
         $this->matieres = new ArrayCollection();
         $this->sessions = new ArrayCollection();
+        $this->reponseEleves = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +226,37 @@ class User implements UserInterface
         if ($this->sessions->contains($session)) {
             $this->sessions->removeElement($session);
             $session->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReponseEleve[]
+     */
+    public function getReponseEleves(): Collection
+    {
+        return $this->reponseEleves;
+    }
+
+    public function addReponseElefe(ReponseEleve $reponseElefe): self
+    {
+        if (!$this->reponseEleves->contains($reponseElefe)) {
+            $this->reponseEleves[] = $reponseElefe;
+            $reponseElefe->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseElefe(ReponseEleve $reponseElefe): self
+    {
+        if ($this->reponseEleves->contains($reponseElefe)) {
+            $this->reponseEleves->removeElement($reponseElefe);
+            // set the owning side to null (unless already changed)
+            if ($reponseElefe->getUser() === $this) {
+                $reponseElefe->setUser(null);
+            }
         }
 
         return $this;

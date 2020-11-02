@@ -42,6 +42,11 @@ class ReponseEleve
      */
     private $reponseProf;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reponseEleves")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class ReponseEleve
     public function setReponseProf(?ReponseProf $reponseProf): self
     {
         $this->reponseProf = $reponseProf;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

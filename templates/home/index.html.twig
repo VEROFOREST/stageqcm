@@ -14,8 +14,8 @@
             </div>
             
             <div class="col-md-4">
-                
-                <button class="btn btn-primary btn-lg" > Corriger</button>
+               
+                 <a  class="btn btn-primary btn-lg" href="{{ path('correction_new', {'id': user.id})}}" > Corriger</a>
             </div>
              {% endif %}
 
@@ -29,10 +29,11 @@
             {% endif %}
         </div>
         <div class="row">
+              {% if is_granted("ROLE_ADMIN") %}
             <div class="col-md-4">
             <button class="btn btn-primary btn-lg"> Administrateur</button>
             </div>
-
+            {% endif %}
         </div>
     </div>
 
