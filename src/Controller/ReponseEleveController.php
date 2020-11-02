@@ -95,23 +95,28 @@ class ReponseEleveController extends AbstractController
         // dd($reponsesform);
         // dd($reponsesform);
         // dd($reponsesform);
+       
+        // dd($repTextarea);
         $entityManager = $this->getDoctrine()->getManager();
         foreach ($reponsesform as $quest=>$ReponseChoice) {
         
              $reponseEleve = new ReponseEleve();
         
              $reponseEleve->setSession($idSessionEleve);
-             
+            //  dd($ReponseChoice);
              $idReponseChoixProf = $reponseProfRepository->findOneById($ReponseChoice);
-            //  dd($idReponseChoixProf);
+              
+            
              $reponseEleve->setReponseProf($idReponseChoixProf);
-             
+               
            
               //   on va rechercher la réponse juste du prof
             //   dd($idReponseChoixProf);
+
+
             $reponseProfOk = $idReponseChoixProf->getIsJust();
             // dump($reponseProfOk);
-            dump($reponseProfOk);
+            // dump($reponseProfOk);
 
             // si cette réponse est notée comme fausse on set la réponse de l'éleve à fausse et inversement
 
@@ -129,11 +134,24 @@ class ReponseEleveController extends AbstractController
                 $reponseEleve->setNoteQuestion($notequestion);
             }
             else $reponseEleve->setNoteQuestion(0);
-               
+            // suivant le type de réponse libre ou qcm
+              $typeRep=$idReponseChoixProf->getQuestion()->getTypeReponse();
+                // dd($typeRep);
+                // si qcm
+            if ($typeRep->getId() === 2) { 
             // on va chercher le libelle de la réponse du prof et on le remet dans la libelle reponse du prof
             $libellereponseEleve=$idReponseChoixProf->getLibelleReponse();
-            $reponseEleve->setReponseEleve($libellereponseEleve);   
+                // dd($libellereponseEleve);
+            $reponseEleve->setReponseEleve($libellereponseEleve);  
+            }
+            // si réponse libre, 
+            if($typeRep->getId() === 1){
+            $idrep = $idReponseChoixProf->getId();
+            // on va récupérer ce que l'éleve a répondu.
+            $repTextarea = $request->get('reponseElevelibelle'.$idrep);
+            $reponseEleve->setReponseEleve($repTextarea); 
             // unset($ReponseChoice);
+            }
             $entityManager->persist($reponseEleve);
     }         
             $entityManager->flush();
@@ -154,13 +172,15 @@ class ReponseEleveController extends AbstractController
      * @Route("/reponse/eleve/confirmation/{id}", name="confirmation_eleve", methods={"GET","POST"})
      */
     public function confirm(User $user,QuestionnaireRepository $questionnaireRepository, ReponseEleveRepository $reponseEleveRepository,Question $questionRepository){
-         $sessionsEleve= $user->getSessions();
-        foreach ($sessionsEleve as $sessionEleve) {
+
+             $sessionsEleve= $user->getSessions();
+        foreach ($sessionsEleve as $sessionEleve) 
+        {
            $idsession= $sessionEleve->getId();
         }
         $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
-        
-       $questionsQuestionnaire = $questionnaireSession->getQuestions();
+        $questionsQuestionnaire = $questionnaireSession->getQuestions();
+        // note totale sur les qcm
        $totalnoteQuestion =0;
         foreach ($questionsQuestionnaire as $question){
             $totalnoteQuestion += $question->getBaremeQuestion();
@@ -170,9 +190,10 @@ class ReponseEleveController extends AbstractController
         }
      
         $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
+        
        $noteQCM=0;
     //    dd($reponsesEleve);
-   $questions = [];
+        $questions = [];
         foreach($reponsesEleve as $reponseEleve){
             $noteQCM += $reponseEleve->getNoteQuestion();
             $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
@@ -198,7 +219,7 @@ class ReponseEleveController extends AbstractController
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=>$reponsesEleve,
              'reponsesProf'=>$reponsesProf,
-             'noteunique'=>$noteunique,
+            //  'noteunique'=>$noteunique,
              'question'=>$question,
          ]);
 

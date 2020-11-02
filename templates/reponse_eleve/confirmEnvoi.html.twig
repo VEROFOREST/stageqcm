@@ -19,9 +19,12 @@
          {{dump(rep)}}
       {% endfor %}
       #}
-      
-   
+      {# pour chaque réponse de l'éleve, on vérifie si qcm si qcm affichage de la note total et des notes par question qcm #}
+    
       {% for reponseEleve in reponsesEleve  %}
+      {% if reponseEleve.reponseProf.question.typeReponse.type == "qcm"  %}
+        
+     
       <div class="card border-primary mb-3" style="max-width: 18rem;">
         <div class="card-header text-primary font-weight-bold">Question n° {{reponseEleve.reponseProf.question.numero}}</div>
           <div class="card-body text-primary">
@@ -34,10 +37,10 @@
              {% endif %}
            
 
-
           </div>
          
         </div>
+         {% endif %}
             {% endfor %}
    
       </div>
