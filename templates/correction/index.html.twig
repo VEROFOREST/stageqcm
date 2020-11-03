@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container text-center">
-	<h1 class="text-center success">Les Réponses </h1>
+	<h1 class="text-center success">Correction</h1>
 	</br>
 	<h4>Voici les réponses de </h4>
      <h4> {{reponsesEleve[0].user.prenom}} {{reponsesEleve[0].user.nom}} </h4>
@@ -28,10 +28,10 @@
                         {# {{dump(rep)}} #}
                     {% endfor %}
 			      
-			    {# pour chaque réponse de l'éleve, on vérifie si qcm si qcm affichage de la note total et des notes par question qcm  #}
+			{# pour chaque réponse de l'éleve, on vérifie si qcm si qcm affichage de la note total et des notes par question qcm  #}
 
 			{% for reponseEleve in reponsesEleve  %}
-        	{# <h4> {{reponseEleve.user.prenom}} {{reponseEleve.user.nom}} </h4>  #}
+        	
 				{% if reponseEleve.reponseProf.question.typeReponse.type == "qcm"  %}
 
 
@@ -73,7 +73,7 @@
                                     {# <label for="exampleFormControlTextarea1">Reponse</label> #}
                                     <span class="input-group-text bg-warning font-weight-bold">question n° {{reponseEleve.reponseProf.question.numero}}</span>
                                     </div>
-                                     <input type="hidden" name="reponseHidden[]"class="form-control" id="repHidden{{reponseEleve.id}}" value="{{reponseEleve.id}}"></input>
+                                     {# <input type="hidden" name="reponseHidden[]"class="form-control" id="repHidden{{reponseEleve.id}}" value="{{reponseEleve.id}}"></input> #}
 
                                     <input type="textarea" name="rep{{reponseEleve.id}}" class="form-control" id="repEleve[{{reponseEleve.id}}]" value="{{reponseEleve.reponseEleve}}"></input>
                                     

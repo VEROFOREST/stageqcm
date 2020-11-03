@@ -179,26 +179,29 @@ class ReponseEleveController extends AbstractController
         $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
         $questionsQuestionnaire = $questionnaireSession->getQuestions();
         // note totale sur les qcm
-       $totalnoteQuestion =0;
+       $totalnoteQuestionQCM =0;
         foreach ($questionsQuestionnaire as $question){
-            $totalnoteQuestion += $question->getBaremeQuestion();
+        //    dd($question->getTypeReponse());
+            if($question->getTypeReponse()->getId() === 2){
+            $totalnoteQuestionQCM += $question->getBaremeQuestion();
+            // dd($question->getBaremeQuestion());
            $reponsesProf= $question->getReponseProfs();
-        //    dd($reponsesProf);
+            }
                     
         }
      
-        $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
+            $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
 
-       $noteQCM=0;
+            $noteQCM=0;
     //    dd($reponsesEleve);
-        $questions = [];
-        foreach($reponsesEleve as $reponseEleve){
+            $questions = [];
+             foreach($reponsesEleve as $reponseEleve){
             $noteQCM += $reponseEleve->getNoteQuestion();
             $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
         //    dd($reponsesProf);
             
          
-        }
+            }
        
             
        
@@ -206,7 +209,7 @@ class ReponseEleveController extends AbstractController
          return $this->render('reponse_eleve/confirmEnvoi.html.twig', [
              'controller_name' => 'ReponseEleveController',
              'noteQCM'=> $noteQCM,
-             'notetotalQuestion'=>$totalnoteQuestion,
+             'notetotalQuestion'=>$totalnoteQuestionQCM,
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=>$reponsesEleve,
              'reponsesProf'=>$reponsesProf,

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Note;
 use App\Entity\User;
+use App\Repository\NoteRepository;
 use App\Repository\QuestionnaireRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseEleveRepository;
@@ -38,9 +39,11 @@ class CorrectionController extends AbstractController
         $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
         $questionsQuestionnaire = $questionnaireSession->getQuestions();
      //  note totale sur les qcm
-     $totalnoteQuestion =0;
+     $totalnoteQuestionQCM =0;
       foreach ($questionsQuestionnaire as $question){
-          $totalnoteQuestion += $question->getBaremeQuestion();
+          if($question->getTypeReponse()->getId() === 2){
+          $totalnoteQuestionQCM += $question->getBaremeQuestion();
+          }
          $reponsesProf= $question->getReponseProfs();
         //   dd($reponsesProf);
                     
@@ -53,7 +56,7 @@ class CorrectionController extends AbstractController
         $questions = [];
         foreach($reponsesEleve as $reponseEleve){
             $noteQCM += $reponseEleve->getNoteQuestion();
-            $reponsesProf =$reponseEleveRepository->findBy (                         ['reponseProf'=>$reponseEleve->getReponseProf()]);
+            $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
         // dd($reponsesProf);
             
          
@@ -63,7 +66,7 @@ class CorrectionController extends AbstractController
         return $this->render('correction/index.html.twig', [
             'controller_name' => 'CorrectionController',
             'noteQCM'=> $noteQCM,
-             'notetotalQuestion'=>$totalnoteQuestion,
+             'notetotalQuestion'=>$totalnoteQuestionQCM,
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=> $reponsesEleve,
              'reponsesProf'=>$reponsesProf,
@@ -75,11 +78,7 @@ class CorrectionController extends AbstractController
     */
     public function correctionStore(User $user, Request $request, ReponseEleveRepository $reponseEleveRepository,QuestionnaireRepository $questionnaireRepository)
     {
-          $idReps =$request->get('reponseHidden',[]);
-        //  dd($idReps);
-         foreach($idReps as $idRep){
-            //  dd($idRep);
-         }
+        
          $notesQL =$request->get('note',[]);
         //  dd($notesQL);
           $entityManager = $this->getDoctrine()->getManager();
@@ -106,7 +105,47 @@ class CorrectionController extends AbstractController
     * @Route("/correction/recap/{id}", name="recap_note")
     * @IsGranted("ROLE_PROF")
     */
-//     public function correctionStore(User $user, Request $request, ReponseEleveRepository $reponseEleveRepository,QuestionnaireRepository $questionnaireRepository)
-//     {
-//     }
+    public function recapNote(User $user, Request $request, ReponseEleveRepository $reponseEleveRepository,QuestionnaireRepository $questionnaireRepository,NoteRepository $noteRepository)
+    {
+            $sessionsProf= $user->getSessions();
+        foreach ($sessionsProf as $sessionEleve) 
+        {
+           $idsession= $sessionEleve->getId();
+        }
+        $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
+        $questionsQuestionnaire = $questionnaireSession->getQuestions();
+     //  note totale sur les qcm
+     $totalnoteQuestionQCM =0;
+      foreach ($questionsQuestionnaire as $question){
+          if($question->getTypeReponse()->getId() === 2){
+          $totalnoteQuestionQCM += $question->getBaremeQuestion();
+          }
+         $reponsesProf= $question->getReponseProfs();
+        //   dd($reponsesProf);
+                    
+      }
+     
+        $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
+
+       $noteQCM=0;
+    // dd($reponsesEleve);
+        $questions = [];
+        foreach($reponsesEleve as $reponseEleve){
+            $noteQCM += $reponseEleve->getNoteQuestion();
+            $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
+        // dd($reponsesProf);
+        }
+        return $this->render('correction/confirmNote.html.twig', [
+            'controller_name' => 'CorrectionController',
+            'noteQCM'=> $noteQCM,
+             'notetotalQuestion'=>$totalnoteQuestionQCM,
+             'questions'=>$questionsQuestionnaire,
+             'reponsesEleve'=> $reponsesEleve,
+             'reponsesProf'=>$reponsesProf,
+        ]);
+
+
+
+
+    }
 }
