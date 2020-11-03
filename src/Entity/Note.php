@@ -17,32 +17,23 @@ class Note
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $noteTotale;
-
+    
     /**
      * @ORM\OneToOne(targetEntity=ReponseEleve::class, cascade={"persist", "remove"})
      */
     private $reponseEleve;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $noteQL;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNoteTotale(): ?int
-    {
-        return $this->noteTotale;
-    }
-
-    public function setNoteTotale(?int $noteTotale): self
-    {
-        $this->noteTotale = $noteTotale;
-
-        return $this;
-    }
+    
 
     public function getReponseEleve(): ?ReponseEleve
     {
@@ -52,6 +43,18 @@ class Note
     public function setReponseEleve(?ReponseEleve $reponseEleve): self
     {
         $this->reponseEleve = $reponseEleve;
+
+        return $this;
+    }
+
+    public function getNoteQL(): ?int
+    {
+        return $this->noteQL;
+    }
+
+    public function setNoteQL(?int $noteQL): self
+    {
+        $this->noteQL = $noteQL;
 
         return $this;
     }

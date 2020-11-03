@@ -61,38 +61,32 @@
             
 		 
      <h4>Réponses Libres </h4>
-        <form>
-    <div class="row ">
-        <div clas="col-md-12">
-       
-            {% for reponseEleve in reponsesEleve  %}
-                    {% if reponseEleve.reponseProf.question.typeReponse.type == "libre"  %}
-                        <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                            {# <label for="exampleFormControlTextarea1">Reponse</label> #}
-                            <span class="input-group-text">question n° {{reponseEleve.reponseProf.question.numero}}</span>
-                            </div>
-                            <input type="textarea" class="form-control" id="exampleFormControlinput1" value="{{reponseEleve.reponseEleve}}"></input>
-                        </div>
-                    {% endif %}
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-    </div>    
-    </div>    
+        <form id="correctionProf-form" method="post" action="{{path("correction_store",{'id':app.user.id})}}">
+        {# {{dump(app.user.id)}} #}
+            <div class="row flex-lg-column ">
+                <div clas="col-md-12">
+            
+                    {% for reponseEleve in reponsesEleve  %}
+                            {% if reponseEleve.reponseProf.question.typeReponse.type == "libre"  %}
+                                <div class="input-group flex-nowrap mt-auto p-3">
+                                    <div class="input-group-prepend">
+                                    {# <label for="exampleFormControlTextarea1">Reponse</label> #}
+                                    <span class="input-group-text bg-warning font-weight-bold">question n° {{reponseEleve.reponseProf.question.numero}}</span>
+                                    </div>
+                                     <input type="hidden" name="reponseHidden[]"class="form-control" id="repHidden{{reponseEleve.id}}" value="{{reponseEleve.id}}"></input>
+
+                                    <input type="textarea" name="rep{{reponseEleve.id}}" class="form-control" id="repEleve[{{reponseEleve.id}}]" value="{{reponseEleve.reponseEleve}}"></input>
+                                    
+                                    <input type="text" name="note[{{reponseEleve.id}}]" class:"form-control text-danger font-weight-bold"></input>
+                                    
+                                    <span class="btn btn-danger">/ {{reponseEleve.reponseProf.question.baremeQuestion}}</span>
+                                </div>
+                            {% endif %}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Notation</button>
+                </div>    
+            </div>    
         </form>
 
-
-
-
-      {# <div class="row justify-content-center">
-        <div class="card text-dark bg-warning mb-3" style="max-width: 25rem;">
-          <div class="card-header text-center font-weight-bold">Note sur les Questions à réponses libres</div>
-            <div class="card-body">
-              <h3 class="card-title"></h3>
-              <p class="card-text">Votre note sur les questions libres est en attente de la correction de votre formateur</p>
-            </div>
-         </div>
-        </div>
-      </div> #}
 </div>  
 {% endblock %}
