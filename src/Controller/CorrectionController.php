@@ -115,30 +115,42 @@ class CorrectionController extends AbstractController
         $questionnaireSession = $questionnaireRepository->findOneBySession($idsession);
         $questionsQuestionnaire = $questionnaireSession->getQuestions();
      //  note totale sur les qcm
-     $totalnoteQuestionQCM =0;
-      foreach ($questionsQuestionnaire as $question){
-          if($question->getTypeReponse()->getId() === 2){
-          $totalnoteQuestionQCM += $question->getBaremeQuestion();
-          }
-         $reponsesProf= $question->getReponseProfs();
-        //   dd($reponsesProf);
-                    
-      }
+            $totalnoteQuestionQCM =0;
+            $totalnoteQuestionQL =0;
+            foreach ($questionsQuestionnaire as $question){
+                if($question->getTypeReponse()->getId() === 2){
+                $totalnoteQuestionQCM += $question->getBaremeQuestion();
+                }
+                if($question->getTypeReponse()->getId() === 1){
+                $totalnoteQuestionQL += $question->getBaremeQuestion();
+                }
+                $reponsesProf= $question->getReponseProfs();
+                //   dd($reponsesProf);
+                            
+            }
      
-        $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
+            $reponsesEleve= $reponseEleveRepository->findBySession($idsession);
 
-       $noteQCM=0;
-    // dd($reponsesEleve);
-        $questions = [];
-        foreach($reponsesEleve as $reponseEleve){
-            $noteQCM += $reponseEleve->getNoteQuestion();
-            $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
-        // dd($reponsesProf);
-        }
+            $noteQCM=0;
+            // dd($reponsesEleve);
+            $noteQL=0;  
+                foreach($reponsesEleve as $reponseEleve){
+                    $typeRep=$reponseEleve->getReponseProf()->getQuestion()->getTypeReponse()->getId();
+                    if ($typeRep === 2){
+                    $noteQCM += $reponseEleve->getNoteQuestion();
+                    }
+                    if ($typeRep === 1){
+                    $noteQL += $reponseEleve->getNoteQuestion();
+                    }
+                    $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
+                // dd($reponsesProf);
+                }
         return $this->render('correction/confirmNote.html.twig', [
             'controller_name' => 'CorrectionController',
             'noteQCM'=> $noteQCM,
+            'noteQL'=>$noteQL,
              'notetotalQuestion'=>$totalnoteQuestionQCM,
+             'notetotalQL'=>$totalnoteQuestionQL,
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=> $reponsesEleve,
              'reponsesProf'=>$reponsesProf,

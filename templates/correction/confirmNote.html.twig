@@ -63,18 +63,18 @@
 			<div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
 				<div class="card-header font-weight-bold">Note sur les Questions à réponses Libres</div>
                 <div class="card-body">
-                    <h3 class="card-title">{{noteQCM}}</h3>
+                    <h3 class="card-title">{{noteQL}}</h3>
                     <p class="card-text">Vous avez obtenu
-                    {{noteQCM}}
+                    {{noteQL}}
                     /
-                    {{notetotalQuestion}} 
-                    pour les questions QCM.</p>
+                    {{notetotalQL}} 
+                    pour les questions à réponses Libres.</p>
                 </div>
 			    
 			</div>
             {% for reponseEleve in reponsesEleve  %}
         	
-				{% if reponseEleve.reponseProf.question.typeReponse.type == "qcm"  %}
+				{% if reponseEleve.reponseProf.question.typeReponse.type == "libre"  %}
 
 
 					<div class="card border-warning mb-3" style="max-width: 18rem;">
