@@ -10,11 +10,26 @@
 	<h4>Voici les réponses de </h4>
      <h4> {{reponsesEleve[0].user.prenom}} {{reponsesEleve[0].user.nom}} </h4>
 	<div class="row justify-content-around">
+
+     <div class="card-deck">
+			<div class="card  border-danger mb-3" style="max-width: 18rem;">
+				{# <div class="card-header font-weight-bold">Note Questionnaire</div> #}
+                <div class="card-body">
+                <h3 class="card-title text-danger"> {{noteQCM + noteQL}}/{{notetotalQuestion + notetotalQL}} </h3>
+                
+                </div>
+					    
+			 </div>
+        </div>
+					    
+	</div>
+	<div class="row justify-content-around">
 		<div class="card-deck">
 			<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
 				<div class="card-header font-weight-bold">Note sur les QCM</div>
                 <div class="card-body">
                     <h3 class="card-title">{{noteQCM}}</h3>
+                                    
                     <p class="card-text">Vous avez obtenu
                     {{noteQCM}}
                     /
@@ -64,39 +79,44 @@
 				<div class="card-header font-weight-bold">Note sur les Questions à réponses Libres</div>
                 <div class="card-body">
                     <h3 class="card-title">{{noteQL}}</h3>
+                    
                     <p class="card-text">Vous avez obtenu
-                    {{noteQL}}
-                    /
-                    {{notetotalQL}} 
+                            {{noteQL}}
+                            /
+                            {{notetotalQL}} 
                     pour les questions à réponses Libres.</p>
                 </div>
 			    
 			</div>
-            {% for reponseEleve in reponsesEleve  %}
+            {# {% for reponseEleve in reponsesEleve  %} #}
+            {% for noteEleveQL in notesEleveQL %}
         	
-				{% if reponseEleve.reponseProf.question.typeReponse.type == "libre"  %}
+				{% if noteEleveQL.reponseEleve.reponseProf.question.typeReponse.type == "libre"  %}
 
 
 					<div class="card border-warning mb-3" style="max-width: 18rem;">
 						<div class="card-header text-warning font-weight-bold">Question n°
-							{{reponseEleve.reponseProf.question.numero}}</div>
+							{{noteEleveQL.reponseEleve.reponseProf.question.numero}}</div>
                         <div class="card-body text-warning">
-                            <h3 class="card-title">{{reponseEleve.noteQuestion}}/{{reponseEleve.reponseProf.question.baremeQuestion}}</h3>
-                            {% if reponseEleve.noteQuestion == reponseEleve.reponseProf.question.baremeQuestion %}
+                               {# {{dump(noteEleveQL.reponseEleve.noteQL)}}   #}
+
+                            <h3 class="card-title">{{noteEleveQL.noteQL}}/{{noteEleveQL.reponseEleve.reponseProf.question.baremeQuestion}}</h3>
+                            {# {% endfor %} #}
+                             {% if noteEleveQL.noteQL == noteEleveQL.reponseEleve.reponseProf.question.baremeQuestion %} 
                                 <p class="card-text material-icons text-success">
                                     check_circle
-                                </p>
-                            {% else %}
-                                <p class="card-text material-icons text-danger">highlight_off</p>
-
-                            {% endif %}
-
-
+                                </p> 
+                             {% elseif noteEleveQL.noteQL < noteEleveQL.reponseEleve.reponseProf.question.baremeQuestion and  noteEleveQL.noteQL >= (noteEleveQL.reponseEleve.reponseProf.question.baremeQuestion )/2 %} 
+                              <p class="card-text material-icons text-warning">flaky</p> 
+                            {% elseif noteEleveQL.noteQL < (noteEleveQL.reponseEleve.reponseProf.question.baremeQuestion )/2 and noteEleveQL.noteQL >= 0 %}
+                                <p class="card-text material-icons text-danger">highlight_off</p> 
+                             {% endif %} 
                         </div>
-					    
 			        </div>
 				{% endif %}
 			{% endfor %}
+
+
 			</div>
 		 </div>
 

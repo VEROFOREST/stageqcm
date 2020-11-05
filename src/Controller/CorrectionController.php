@@ -85,15 +85,16 @@ class CorrectionController extends AbstractController
          foreach ($notesQL as $idRepEleve=>$noteQL) {
             //  dd((int)$noteQL);
             $note = new Note();
+            
             $repEleve=$reponseEleveRepository->findOneById($idRepEleve);
-            // dd($repEleve);
+            // dd((int)$noteQL);
             $note->setNoteQL((int)$noteQL);
             $note->setReponseEleve($repEleve);
             $entityManager->persist($note);
             
          }
             $entityManager->flush();
-            // dd($note);
+          
        
           return $this->redirectToRoute('recap_note',['id'=> $user->getId()]);  
         return $this->render('correction/index.html.twig', [
@@ -133,18 +134,22 @@ class CorrectionController extends AbstractController
 
             $noteQCM=0;
             // dd($reponsesEleve);
-            $noteQL=0;  
                 foreach($reponsesEleve as $reponseEleve){
                     $typeRep=$reponseEleve->getReponseProf()->getQuestion()->getTypeReponse()->getId();
+                    // dd($typeRep);
                     if ($typeRep === 2){
                     $noteQCM += $reponseEleve->getNoteQuestion();
                     }
-                    if ($typeRep === 1){
-                    $noteQL += $reponseEleve->getNoteQuestion();
-                    }
-                    $reponsesProf =$reponseEleveRepository->findBy (['reponseProf'=>$reponseEleve->getReponseProf()]);
-                // dd($reponsesProf);
+                                   
                 }
+            $noteQL=0;  
+                $notesEleveQL = $noteRepository->findAll();
+                foreach ($notesEleveQL as$noteEleveQL) {
+                    $noteQL += $noteEleveQL->getNoteQL();
+                    # code...
+                }
+                        // dd($notesEleveQL);
+            
         return $this->render('correction/confirmNote.html.twig', [
             'controller_name' => 'CorrectionController',
             'noteQCM'=> $noteQCM,
@@ -154,6 +159,7 @@ class CorrectionController extends AbstractController
              'questions'=>$questionsQuestionnaire,
              'reponsesEleve'=> $reponsesEleve,
              'reponsesProf'=>$reponsesProf,
+             'notesEleveQL'=>$notesEleveQL,
         ]);
 
 
