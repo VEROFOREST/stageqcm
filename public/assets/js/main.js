@@ -3,6 +3,7 @@
 document.readyState === "loading"
   ? window.addEventListener("DOMContentLoaded", main)
   : main();
+  // la fonction main permet de créer une question au click du bouton 
 function main() {
   // bouton pour ajouter une question
   const boutonQuestion = `\
