@@ -7,3 +7,9 @@
   --width: 12px;
   --borderColor: #78b13f;
 }
+.presentation {
+  background: linear-gradient(180deg,#375899,#082c6f);
+}
+.form-group{
+  margin-bottom: 1rem;
+}

@@ -3,8 +3,13 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<div class="container">
-<form method="post">
+ <div class="m-5 align-self-center">
+    <div class="card shadow-lg my-5 ">
+        <div class="card-header">
+            <h1 class="font-weight-light text-center py-3 text-white presentation">Connexion</h1>
+        </div>
+        <div class="card-body  ">
+<form method="post" class="text-center">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -15,16 +20,15 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-     <div class="form-group col-md-6">
-    <label for="inputEmail">Email</label>
-    <input class="form-control" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input  class="form-control" type="password" name="password" id="inputPassword" class="form-control" required>
+    
+     <div class="form-group col-md-4 offset-md-4 ">
+        <label for="inputEmail">Email</label>
+        <input class="form-control" type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input  class="form-control" type="password" name="password" id="inputPassword" class="form-control" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}">
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -42,4 +46,6 @@
     </button>
 </form>
 </div>
+    </div>
+  </div>
 {% endblock %}

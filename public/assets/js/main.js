@@ -29,7 +29,9 @@ function main() {
   $boutonAjouterQuestion.addEventListener("click", () =>
     addQuestionForm($collectionQuestion, $nouveau)
   );
+  
 }
+
 // fonction d'ajout du formulaire de question avec les deux paramètres précèdents 
 function addQuestionForm($collectionQuestion, $nouveau) {
   // on crée la variable du bouton ajout de réponse dans ce form question
@@ -67,6 +69,8 @@ function addQuestionForm($collectionQuestion, $nouveau) {
       index
     )
   );
+  const nbrequestion=document.querySelector('.nbrequestion');
+console.log(nbrequestion.value);
 }
 // fonction d'ajout du formulaire de réponse avec les trois paramètres cités ci dessus.
 function addReponseForm($collectionReponse, $question, indexQuestion) {

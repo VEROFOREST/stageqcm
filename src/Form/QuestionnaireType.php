@@ -6,14 +6,15 @@ use App\Entity\Matiere;
 use App\Entity\Questionnaire;
 use App\Entity\Session;
 use DateTime;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 
 class QuestionnaireType extends AbstractType
 {
@@ -53,8 +54,8 @@ class QuestionnaireType extends AbstractType
                     ],
                     'widget' => 'single_text',
                     'attr' => ['class' => 'js-datepicker']])
-            ->add('nbreQuestion')
-            ->add('baremeTot')
+            ->add('nbreQuestion',NumberType::class)
+            ->add('baremeTot',NumberType::class)
             ->add('questions', CollectionType::class, array(
                                 'entry_type' => QuestionType::class,
                                 'entry_options' => [

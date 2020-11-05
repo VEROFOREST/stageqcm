@@ -3,8 +3,13 @@
 {% block title %}Reponses au questionnaire{% endblock %}
 
 {% block body %}
-<div class="container">
-  <h1 class="show">Questionnaire  {{questionnaireEleve.matiere.nom}}</h1>
+<div class="m-5 align-self-center">
+    <div class="card shadow-lg my-5 ">
+        <div class="card-header">
+            <h1 class="font-weight-light text-center py-3 text-white presentation">Questionnaire  {{questionnaireEleve.matiere.nom}}</h1>
+        </div>
+        <div class="card-body  ">
+  
   
   <form id="reponseEleve-form" method="post" action="{{path("reponse_eleve_store",{'id':user.id})}}">
    
@@ -31,14 +36,14 @@
         </div>
       
       
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           
            <label for="inputLieu">barème total</label>
           <input type="text" class="form-control" id="inputBareme" value="{{questionnaireEleve.baremeTot}}">
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-4">
           <label for="inputContenu">Nombre de questions </label>
           <input type="textarea" class="form-control" id="inputNbre" value="{{questionnaireEleve.nbreQuestion}}" >       
         </div>
@@ -48,7 +53,7 @@
      
       <div id="question{{question.id}}" style="display:block;"  >
         <div class="form-group col-md-12 question">
-          <label for="inputNom">Question n° {{question.numero}}</label>
+          <label class="text-primary font-weight-bold" for="inputNom">Question n° {{question.numero}}</label>
          
           <input  type="text" class="form-control" id="inputNom{{question.id}}" value="{{question.libelle}}" data-question="{{question.id}}" >
         </div>
@@ -59,7 +64,7 @@
 
         {% if question.typeReponse.type == "qcm" %}
       
-          <div class="custom-control custom-checkbox">
+          <div class="custom-control custom-checkbox align-center">
             {% set checked ='' %}
             
             <input   type="checkbox" name= "reponseEleve[{{question.id}}][]" class="custom-control-input reponseEleve" id="customCheck{{reponse.id}}" value="{{reponse.id}}" {% if checked %} checked="checked"{% endif %} onChange="getcheckrep(this)" data-rep="{{reponse.isJust}}" data-codequestion ="{{question.id}}">
@@ -109,7 +114,9 @@
       
 
   </form>
-  
+  </div>
+  </div>
+  </div>
 
 
 {% endblock %} 
