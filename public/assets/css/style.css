@@ -7,7 +7,29 @@
   --width: 12px;
   --borderColor: #78b13f;
 }
-.presentation {
+.navbar{
+  background:linear-gradient(180deg,#375899,#082c6f);
+  color:white !important;
+  font-weight:italic;
+}
+a{
+  color:white !important;
+  
+}
+ul{
+  margin-left: 80%;
+  
+  }
+li{
+  display: inline;
+ 
+}
+li a {
+  display: inline;
+	width: 100px;
+	padding: 5px 10px;
+}
+.presentation{
   background: linear-gradient(180deg,#375899,#082c6f);
 }
 .form-group{

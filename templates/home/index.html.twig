@@ -8,17 +8,17 @@
         <div class="card-header">
             <h1 class="font-weight-light text-center py-3 text-white presentation">Accueil</h1>
         </div>
-        <div class="card-body  ">
-        <div class="row justify-content-around">
+        <div class="card-body ">
+        <div class="row">
             {% if is_granted("ROLE_PROF") %}
                 
          
-            <div class="col-md-4">
+            <div class="col-md-3  offset-1">
               <a class="btn btn-primary btn-lg" href="{{ path('questionnaire_new', {'id': user.id})}}"> Créer un questionnaire</a>
               
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-3 offset-1">
                
                  <a  class="btn btn-primary btn-lg" href="{{ path('correction_new', {'id': user.id})}}" > Corriger</a>
             </div>
