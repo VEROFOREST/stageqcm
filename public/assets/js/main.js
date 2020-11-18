@@ -69,8 +69,7 @@ function addQuestionForm($collectionQuestion, $nouveau) {
       index
     )
   );
-  const nbrequestion=document.querySelector('.nbrequestion');
-console.log(nbrequestion.value);
+  
 }
 // fonction d'ajout du formulaire de réponse avec les trois paramètres cités ci dessus.
 function addReponseForm($collectionReponse, $question, indexQuestion) {

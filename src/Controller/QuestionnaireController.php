@@ -74,12 +74,12 @@ class QuestionnaireController extends AbstractController
 
         }
 
-      
+        // return $this->redirectToRoute('home',['id'=> $user->getId()]);
         return $this->render('questionnaire/index.html.twig', [
           
-            'questionnaire'=>$questionnaire,
-            'question'=>$question,
-            'reponseProf'=>$reponseProf,
+            // 'questionnaire'=>$questionnaire,
+            // 'question'=>$question,
+            // 'reponseProf'=>$reponseProf,
             'form' => $form->createView(), // cela construit la view formulaire d'apres le FormType
             
             

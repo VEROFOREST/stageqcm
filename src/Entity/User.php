@@ -239,23 +239,23 @@ class User implements UserInterface
         return $this->reponseEleves;
     }
 
-    public function addReponseElefe(ReponseEleve $reponseElefe): self
+    public function addReponseEleve(ReponseEleve $reponseEleve): self
     {
-        if (!$this->reponseEleves->contains($reponseElefe)) {
-            $this->reponseEleves[] = $reponseElefe;
-            $reponseElefe->setUser($this);
+        if (!$this->reponseEleves->contains($reponseEleve)) {
+            $this->reponseEleves[] = $reponseEleve;
+            $reponseEleve->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeReponseElefe(ReponseEleve $reponseElefe): self
+    public function removeReponseEleve(ReponseEleve $reponseEleve): self
     {
-        if ($this->reponseEleves->contains($reponseElefe)) {
-            $this->reponseEleves->removeElement($reponseElefe);
+        if ($this->reponseEleves->contains($reponseEleve)) {
+            $this->reponseEleves->removeElement($reponseEleve);
             // set the owning side to null (unless already changed)
-            if ($reponseElefe->getUser() === $this) {
-                $reponseElefe->setUser(null);
+            if ($reponseEleve->getUser() === $this) {
+                $reponseEleve->setUser(null);
             }
         }
 
